@@ -7,6 +7,7 @@ interface WalletContextValue {
   modal: WalletSelectorModal | null;
   accountId: string | null;
   setAccountId: (accountId: string | null) => void;
+  Logout: () => void;
 }
 
 export const WalletContext = createContext<WalletContextValue>({
@@ -14,4 +15,5 @@ export const WalletContext = createContext<WalletContextValue>({
   modal: null,
   accountId: null,
   setAccountId: () => {},
+  Logout: () => {},
 });

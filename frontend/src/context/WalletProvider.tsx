@@ -26,12 +26,12 @@ import { WalletContext } from "./WalletContext";
 interface WalletProviderProps {
   children: ReactNode;
 }
-
 export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
   const [selector, setSelector] = useState<WalletSelector | null>(null);
   const [modal, setModal] = useState<WalletSelectorModal | null>(null);
   const [accountId, setAccountId] = useState<string | null>(null);
   const { login, logout } = useUserStore();
+
   useEffect(() => {
     const init = async () => {
       const _selector = await setupWalletSelector({
@@ -89,9 +89,22 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
     }
   }, [selector, login, logout]);
 
+  const Logout = async () => {
+    if (selector) {
+      const wallet = await selector.wallet();
+      try {
+        await wallet.signOut();
+      } catch (error) {
+        console.error("Error during wallet disconnect:", error);
+      }
+    }
+    setAccountId(null);
+    logout();
+  };
+
   return (
     <WalletContext.Provider
-      value={{ selector, modal, accountId, setAccountId }}
+      value={{ selector, modal, accountId, setAccountId, Logout }}
     >
       {children}
     </WalletContext.Provider>
