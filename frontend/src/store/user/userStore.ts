@@ -1,6 +1,13 @@
 import { create } from "zustand";
 
-export const useUserStore = create((set) => ({
+interface UserState {
+  isLoggedIn: boolean;
+  nearAccount: string | null;
+  login: (account: string) => void;
+  logout: () => void;
+}
+
+export const useUserStore = create<UserState>((set) => ({
   isLoggedIn: false,
   nearAccount: null,
   login: (account: string) => set({ isLoggedIn: true, nearAccount: account }),
