@@ -1,6 +1,7 @@
-import { Button, Flex, Paper, Stack, Title } from "@mantine/core";
+import { Flex, Paper, Stack, Title } from "@mantine/core";
+import { ConnectWalletButton } from "../components/ConnectWalletButton/ConnectWalletButton";
 
-export function SigninPage() {
+export function LoginPage() {
   return (
     <Flex
       mih="100vh"
@@ -15,7 +16,7 @@ export function SigninPage() {
       </Title>
       <Paper shadow="xs" p="xl">
         <Stack>
-          <Button>Connect Wallet</Button>
+          <ConnectWalletButton />
         </Stack>
       </Paper>
     </Flex>
