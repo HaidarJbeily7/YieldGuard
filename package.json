@@ -1,5 +1,20 @@
 {
   "dependencies": {
+    "@near-wallet-selector/bitget-wallet": "^8.9.15",
+    "@near-wallet-selector/coin98-wallet": "^8.9.15",
+    "@near-wallet-selector/core": "^8.9.15",
+    "@near-wallet-selector/here-wallet": "^8.9.15",
+    "@near-wallet-selector/ledger": "^8.9.15",
+    "@near-wallet-selector/math-wallet": "^8.9.15",
+    "@near-wallet-selector/meteor-wallet": "^8.9.15",
+    "@near-wallet-selector/modal-ui": "^8.9.15",
+    "@near-wallet-selector/my-near-wallet": "^8.9.15",
+    "@near-wallet-selector/narwallets": "^8.9.15",
+    "@near-wallet-selector/nearfi": "^8.9.15",
+    "@near-wallet-selector/neth": "^8.9.15",
+    "@near-wallet-selector/nightly": "^8.9.15",
+    "@near-wallet-selector/sender": "^8.9.15",
+    "@near-wallet-selector/xdefi": "^8.9.15",
     "zustand": "^5.0.2"
   }
 }
