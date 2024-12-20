@@ -7,7 +7,6 @@ import {
   WalletSelector,
 } from "@near-wallet-selector/core";
 import { setupHereWallet } from "@near-wallet-selector/here-wallet";
-import { setupLedger } from "@near-wallet-selector/ledger";
 import { setupMathWallet } from "@near-wallet-selector/math-wallet";
 import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet";
 import {
@@ -47,7 +46,6 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
           setupNightly(),
           setupMeteorWallet(),
           setupNarwallets(),
-          setupLedger(),
           setupNearFi(),
           setupCoin98Wallet(),
           setupNeth(),
