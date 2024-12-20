@@ -31,7 +31,7 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
   const [selector, setSelector] = useState<WalletSelector | null>(null);
   const [modal, setModal] = useState<WalletSelectorModal | null>(null);
   const [accountId, setAccountId] = useState<string | null>(null);
-  const { login } = useUserStore();
+  const { login, logout } = useUserStore();
   useEffect(() => {
     const init = async () => {
       const _selector = await setupWalletSelector({
@@ -78,17 +78,16 @@ export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
         const accounts = state.accounts;
         if (accounts.length > 0) {
           setAccountId(accounts[0].accountId);
-          localStorage.setItem("near_account_id", accounts[0].accountId);
           login(accounts[0].accountId);
         } else {
           setAccountId(null);
-          localStorage.removeItem("near_account_id");
+          logout();
         }
       });
 
       return () => subscription.unsubscribe();
     }
-  }, [selector, login]);
+  }, [selector, login, logout]);
 
   return (
     <WalletContext.Provider
