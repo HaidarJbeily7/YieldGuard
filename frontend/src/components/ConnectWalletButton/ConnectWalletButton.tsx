@@ -1,9 +1,13 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Button, Flex, Text } from "@mantine/core";
 import { WalletContext } from "../../context/WalletContext";
+import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../../store/user";
 
 export const ConnectWalletButton: React.FC = () => {
   const { modal, accountId, Logout } = useContext(WalletContext);
+  const isLoggedIn = useUserStore((state) => state.isLoggedIn);
+  const navigate = useNavigate();
 
   const handleConnectWallet = () => {
     if (modal) {
@@ -14,6 +18,13 @@ export const ConnectWalletButton: React.FC = () => {
   const handleDisconnecte = () => {
     Logout();
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      console.log("Trigered");
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
 
   return (
     <div>
