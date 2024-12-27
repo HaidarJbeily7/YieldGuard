@@ -31,6 +31,7 @@ import { useDisclosure } from "@mantine/hooks";
 import Logo from "/img/logo.svg";
 import classes from "./Header.module.css";
 import { ConnectWalletButton } from "../ConnectWalletButton/ConnectWalletButton";
+import { ColorSchemeToggle } from "../ColorSchemeToggle/ColorSchemeToggle";
 
 const mockdata = [
   {
@@ -156,7 +157,9 @@ export function Header() {
             </a>
           </Group>
 
-          <Group visibleFrom="sm">
+          <Group visibleFrom="sm" justify="center">
+            <ColorSchemeToggle />
+            <Divider orientation="vertical" />
             <ConnectWalletButton size="sm" />
           </Group>
 
@@ -201,8 +204,9 @@ export function Header() {
 
           <Divider my="sm" />
 
-          <Group justify="center" grow pb="xl" px="md">
+          <Group justify="space-between" pb="xl" px="md">
             <ConnectWalletButton size="xs" />
+            <ColorSchemeToggle />
           </Group>
         </ScrollArea>
       </Drawer>
