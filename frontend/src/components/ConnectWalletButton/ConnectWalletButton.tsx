@@ -8,9 +8,11 @@ export const ConnectWalletButton: React.FC = () => {
   const { modal, accountId, Logout } = useContext(WalletContext);
   const isLoggedIn = useUserStore((state) => state.isLoggedIn);
   const navigate = useNavigate();
+  const needRedirection = localStorage.getItem("needRedirection");
 
   const handleConnectWallet = () => {
     if (modal) {
+      localStorage.setItem("needRedirection", "true");
       modal.show();
     }
   };
@@ -20,11 +22,11 @@ export const ConnectWalletButton: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
-      console.log("Trigered");
-      navigate("/");
+    if (isLoggedIn && needRedirection === "true") {
+      localStorage.setItem("needRedirection", "false");
+      navigate("/dashboard");
     }
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, navigate, needRedirection]);
 
   return (
     <div>
