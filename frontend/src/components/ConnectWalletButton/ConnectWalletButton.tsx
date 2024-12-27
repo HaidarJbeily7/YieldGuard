@@ -1,10 +1,16 @@
 import React, { useContext, useEffect } from "react";
-import { Button, Flex, Text } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { WalletContext } from "../../context/WalletContext";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../store/user";
 
-export const ConnectWalletButton: React.FC = () => {
+interface ConnectWalletButtonProps {
+  size?: string;
+}
+
+export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
+  size = "md",
+}) => {
   const { modal, accountId, Logout } = useContext(WalletContext);
   const isLoggedIn = useUserStore((state) => state.isLoggedIn);
   const navigate = useNavigate();
@@ -31,32 +37,20 @@ export const ConnectWalletButton: React.FC = () => {
   return (
     <div>
       {accountId ? (
-        <Flex
-          mih={50}
-          gap="xl"
-          justify="center"
-          align="center"
-          direction="column"
-          wrap="wrap"
+        <Button
+          onClick={handleDisconnecte}
+          variant="gradient"
+          gradient={{ from: "red", to: "orange", deg: 90 }}
+          size={size}
         >
-          <Text fw={500} size="lg">
-            Connected as {accountId}
-          </Text>
-          <Button
-            onClick={handleDisconnecte}
-            variant="gradient"
-            gradient={{ from: "red", to: "orange", deg: 90 }}
-            size="lg"
-          >
-            Disconnect
-          </Button>
-        </Flex>
+          Disconnect
+        </Button>
       ) : (
         <Button
           onClick={handleConnectWallet}
           variant="gradient"
           gradient={{ from: "blue", to: "cyan", deg: 90 }}
-          size="lg"
+          size={size}
         >
           Connect NEAR Wallet
         </Button>
