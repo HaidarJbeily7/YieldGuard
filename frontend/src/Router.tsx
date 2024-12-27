@@ -6,6 +6,7 @@ import {
 import { HomePage } from "./pages/Home.page";
 import { LoginPage } from "./pages/Auth.page";
 import { useUserStore } from "./store/user";
+import { DashboardPage } from "./pages/Dashboard.page";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isAuth = useUserStore((state) => state.isLoggedIn);
@@ -18,15 +19,19 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <ProtectedRoute>
-        <HomePage />
-      </ProtectedRoute>
-    ),
+    element: <HomePage />,
   },
   {
     path: "/auth",
     element: <LoginPage />,
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <ProtectedRoute>
+        <DashboardPage />
+      </ProtectedRoute>
+    ),
   },
 ]);
 
