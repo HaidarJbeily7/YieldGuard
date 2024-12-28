@@ -1,0 +1,33 @@
+name: contracts/WhiteListedAccounts - Test
+on:
+  workflow_call:
+    paths:
+      - 'contracts/WhiteListedAccounts/**'
+jobs:
+  code-formatting:
+    name: Code Formatting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - run: cd contracts/WhiteListedAccounts  && cargo fmt --check
+
+  code-linter:
+    name: Code Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run cargo clippy
+        run: |
+          rustup component add clippy
+          cd contracts/WhiteListedAccounts  && cargo clippy --all-features --workspace --tests -- --warn clippy::all --warn clippy::nursery
+
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Run cargo test
+        run: cd contracts/WhiteListedAccounts  && cargo test
