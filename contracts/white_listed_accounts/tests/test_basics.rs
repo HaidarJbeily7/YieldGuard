@@ -1,19 +1,21 @@
+use near_sdk::log;
 use serde_json::json;
 
 #[tokio::test]
 async fn test_whitelist_operations() -> Result<(), Box<dyn std::error::Error>> {
     let sandbox = near_workspaces::sandbox().await?;
+    log!("Start the fun!");
     let contract_wasm = near_workspaces::compile_project("./").await?;
-
     let contract = sandbox.dev_deploy(&contract_wasm).await?;
     let owner = sandbox.dev_create_account().await?;
     let user = sandbox.dev_create_account().await?;
-
+    
     // Initialize contract with owner
-    owner.call(contract.id(), "new")
+    let outcome = owner.call(contract.id(), "new")
         .args_json(json!({"owner_id": owner.id()}))
         .transact()
         .await?;
+    assert!(outcome.is_success());
 
     // Add user to whitelist
     let outcome = owner

@@ -19,6 +19,7 @@ impl Default for Contract {
 #[near]
 impl Contract {
     #[init]
+    #[private] 
     pub fn new(owner_id: AccountId) -> Self {
         Self {
             owner_id,
