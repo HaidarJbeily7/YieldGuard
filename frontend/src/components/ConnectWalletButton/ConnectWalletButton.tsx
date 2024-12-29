@@ -1,62 +1,82 @@
 import React, { useContext, useEffect } from "react";
-import { Button, Flex, Text } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { WalletContext } from "../../context/WalletContext";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../store/user";
 
-export const ConnectWalletButton: React.FC = () => {
+interface ConnectWalletButtonProps {
+  size?: string;
+  style?: React.CSSProperties;
+  className?: string;
+  textStyle?: React.CSSProperties;
+  textClassName?: string;
+  gradient?: { from: string; to: string; deg?: number };
+  rightSection?: React.ReactNode;
+  text?: string;
+}
+
+export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
+  size = "md",
+  style,
+  className,
+  textStyle,
+  textClassName,
+  gradient = { from: "blue", to: "cyan", deg: 90 },
+  rightSection,
+  text,
+}) => {
   const { modal, accountId, Logout } = useContext(WalletContext);
   const isLoggedIn = useUserStore((state) => state.isLoggedIn);
   const navigate = useNavigate();
+  const needRedirection = localStorage.getItem("needRedirection");
 
   const handleConnectWallet = () => {
     if (modal) {
+      localStorage.setItem("needRedirection", "true");
       modal.show();
     }
   };
 
-  const handleDisconnecte = () => {
+  const handleDisconnect = () => {
     Logout();
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
-      console.log("Trigered");
-      navigate("/");
+    if (isLoggedIn && needRedirection === "true") {
+      localStorage.setItem("needRedirection", "false");
+      navigate("/dashboard");
     }
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, navigate, needRedirection]);
 
   return (
     <div>
       {accountId ? (
-        <Flex
-          mih={50}
-          gap="xl"
-          justify="center"
-          align="center"
-          direction="column"
-          wrap="wrap"
+        <Button
+          onClick={handleDisconnect}
+          variant="gradient"
+          gradient={gradient}
+          size={size}
+          style={style}
+          className={className}
+          rightSection={rightSection}
         >
-          <Text fw={500} size="lg">
-            Connected as {accountId}
-          </Text>
-          <Button
-            onClick={handleDisconnecte}
-            variant="gradient"
-            gradient={{ from: "red", to: "orange", deg: 90 }}
-            size="lg"
-          >
-            Disconnect
-          </Button>
-        </Flex>
+          <span style={textStyle} className={textClassName}>
+            {text || "Disconnect"}
+          </span>
+        </Button>
       ) : (
         <Button
           onClick={handleConnectWallet}
           variant="gradient"
-          gradient={{ from: "blue", to: "cyan", deg: 90 }}
-          size="lg"
+          gradient={gradient}
+          size={size}
+          style={style}
+          className={className}
+          rightSection={rightSection}
         >
-          Connect NEAR Wallet
+          <span style={textStyle} className={textClassName}>
+            {text || "Connect NEAR Wallet"}
+          </span>
         </Button>
       )}
     </div>
