@@ -6,10 +6,24 @@ import { useUserStore } from "../../store/user";
 
 interface ConnectWalletButtonProps {
   size?: string;
+  style?: React.CSSProperties;
+  className?: string;
+  textStyle?: React.CSSProperties;
+  textClassName?: string;
+  gradient?: { from: string; to: string; deg?: number };
+  rightSection?: React.ReactNode;
+  text?: string;
 }
 
 export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
   size = "md",
+  style,
+  className,
+  textStyle,
+  textClassName,
+  gradient = { from: "blue", to: "cyan", deg: 90 },
+  rightSection,
+  text,
 }) => {
   const { modal, accountId, Logout } = useContext(WalletContext);
   const isLoggedIn = useUserStore((state) => state.isLoggedIn);
@@ -23,7 +37,7 @@ export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
     }
   };
 
-  const handleDisconnecte = () => {
+  const handleDisconnect = () => {
     Logout();
   };
 
@@ -38,21 +52,31 @@ export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
     <div>
       {accountId ? (
         <Button
-          onClick={handleDisconnecte}
+          onClick={handleDisconnect}
           variant="gradient"
-          gradient={{ from: "red", to: "orange", deg: 90 }}
+          gradient={gradient}
           size={size}
+          style={style}
+          className={className}
+          rightSection={rightSection}
         >
-          Disconnect
+          <span style={textStyle} className={textClassName}>
+            {text || "Disconnect"}
+          </span>
         </Button>
       ) : (
         <Button
           onClick={handleConnectWallet}
           variant="gradient"
-          gradient={{ from: "blue", to: "cyan", deg: 90 }}
+          gradient={gradient}
           size={size}
+          style={style}
+          className={className}
+          rightSection={rightSection}
         >
-          Connect NEAR Wallet
+          <span style={textStyle} className={textClassName}>
+            {text || "Connect NEAR Wallet"}
+          </span>
         </Button>
       )}
     </div>
