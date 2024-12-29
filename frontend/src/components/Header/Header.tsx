@@ -24,7 +24,7 @@ import {
   Text,
   ThemeIcon,
   UnstyledButton,
-  useMantineTheme,
+  // useMantineTheme,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 
@@ -70,13 +70,13 @@ export function Header() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
-  const theme = useMantineTheme();
+  // const theme = useMantineTheme();
 
   const links = mockdata.map((item) => (
     <UnstyledButton className={classes.subLink} key={item.title}>
       <Group wrap="nowrap" align="flex-start">
         <ThemeIcon size={34} variant="default" radius="md">
-          <item.icon size={22} color={theme.colors.blue[6]} />
+          <item.icon size={22} color={"#41d7cb"} />
         </ThemeIcon>
         <div>
           <Text size="sm" fw={500}>
@@ -91,7 +91,7 @@ export function Header() {
   ));
 
   return (
-    <Box pb={120}>
+    <Box>
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
           <Group gap={4}>
@@ -115,7 +115,7 @@ export function Header() {
                     <Box component="span" mr={5}>
                       Features
                     </Box>
-                    <IconChevronDown size={16} color={theme.colors.blue[6]} />
+                    <IconChevronDown size={16} color={"#41d7cb"} />
                   </Center>
                 </a>
               </HoverCard.Target>
@@ -191,7 +191,7 @@ export function Header() {
               <Box component="span" mr={5}>
                 Features
               </Box>
-              <IconChevronDown size={16} color={theme.colors.blue[6]} />
+              <IconChevronDown size={16} color={"#41d7cb"} />
             </Center>
           </UnstyledButton>
           <Collapse in={linksOpened}>{links}</Collapse>
