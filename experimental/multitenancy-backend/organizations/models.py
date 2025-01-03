@@ -8,8 +8,6 @@ class Organization(models.Model):
         ('active', 'Active'),
         ('rejected', 'Rejected')
     ]
-    company_name = models.CharField(max_length=255)
-    phone_number = models.CharField(max_length=20)
     status = models.CharField(
         max_length=20, 
         choices=STATUS_CHOICES,
@@ -33,7 +31,7 @@ class OrganizationUser(models.Model):
 
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    job_title = models.CharField(max_length=255)
+    metadata = models.JSONField(default=dict, blank=True, help_text="Additional metadata about the organization user")
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

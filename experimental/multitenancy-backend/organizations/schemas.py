@@ -3,30 +3,32 @@ from datetime import datetime
 from typing import Optional
 
 class OrganizationCreate(Schema):
-    first_name: str
-    last_name: str
-    job_title: str
-    company_name: str
-    work_email: str
-    phone_number: str
-    yearly_travel_spending: float
+    subdomain: str
+    owner_id: int
 
 class OrganizationOut(Schema):
     id: int
-    name: str
-    sector: str
-    registration_number: str
-    contact_email: str
-    contact_phone: str
     status: str
-    created_at: datetime
+    owner_id: int
     subdomain: str
     is_active: bool
+    created_at: datetime
+    updated_at: datetime
 
 class OrganizationUpdate(Schema):
-    name: Optional[str]
-    sector: Optional[str]
-    contact_email: Optional[str]
-    contact_phone: Optional[str]
     status: Optional[str]
     is_active: Optional[bool]
+
+class OrganizationUserCreate(Schema):
+    email: str
+    role: str
+    metadata: dict = {}
+
+class OrganizationUserOut(Schema):
+    id: int
+    organization_id: int
+    user_id: int
+    role: str
+    metadata: dict
+    created_at: datetime
+    updated_at: datetime
