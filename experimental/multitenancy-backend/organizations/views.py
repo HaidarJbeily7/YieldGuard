@@ -26,8 +26,12 @@ User = get_user_model()
 def organization_member_required(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
-        org_user = OrganizationUser.objects.get(user=request.user)
-        if not request.user or not org_user:
+        if not request.auth:
+            return Response({"message": "Unauthorized"}, status=401)
+            
+        try:
+            org_user = OrganizationUser.objects.get(user=request.auth)
+        except OrganizationUser.DoesNotExist:
             return Response({"message": "Forbidden"}, status=403)
             
         # Assign org user to request
@@ -39,15 +43,19 @@ def organization_member_required(view_func):
 def organization_admin_required(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
-        org_user = OrganizationUser.objects.get(user=request.user)
-        if not request.user or not org_user:
+        if not request.auth:
+            return Response({"message": "Unauthorized"}, status=401)
+            
+        try:
+            org_user = OrganizationUser.objects.get(user=request.auth)
+        except OrganizationUser.DoesNotExist:
             return Response({"message": "Forbidden"}, status=403)
         
         if not request.organization:
             return Response({"message": "Forbidden"}, status=403)
         
         if not request.organization.organizationuser_set.filter(
-            user=request.user, 
+            user=request.auth, 
             role__in=['owner', 'admin']
         ).exists():
             return Response({"message": "Forbidden"}, status=403)
@@ -109,7 +117,7 @@ def list_organizations(request):
 @organization_member_required
 def get_organization(request, org_id: int):
     org = get_object_or_404(Organization, id=org_id)
-    if not request.user.is_superuser and org.id != request.organization.id:
+    if not request.auth.is_superuser and org.id != request.organization.id:
         return Response({"message": "Forbidden"}, status=403)
     return org
 
@@ -117,7 +125,7 @@ def get_organization(request, org_id: int):
 @organization_member_required
 def list_organization_users(request, org_id: int):
     org = get_object_or_404(Organization, id=org_id)
-    if not request.user.is_superuser and org.id != request.organization.id:
+    if not request.auth.is_superuser and org.id != request.organization.id:
         return Response({"message": "Forbidden"}, status=403)
     return org.organizationuser_set.all()
 
@@ -125,7 +133,7 @@ def list_organization_users(request, org_id: int):
 @organization_admin_required
 def add_organization_user(request, org_id: int, data: OrganizationUserCreate):
     org = get_object_or_404(Organization, id=org_id)
-    if not request.user.is_superuser and org.id != request.organization.id:
+    if not request.auth.is_superuser and org.id != request.organization.id:
         return Response({"message": "Forbidden"}, status=403)
         
     try:
@@ -149,7 +157,7 @@ def add_organization_user(request, org_id: int, data: OrganizationUserCreate):
 @organization_member_required
 def create_vote(request, org_id: int, data: VoteCreate):
     org = get_object_or_404(Organization, id=org_id)
-    if not request.user.is_superuser and org.id != request.organization.id:
+    if not request.auth.is_superuser and org.id != request.organization.id:
         return Response({"message": "Forbidden"}, status=403)
     
     # Validate content type
@@ -161,7 +169,7 @@ def create_vote(request, org_id: int, data: VoteCreate):
     # Create or update vote
     vote, created = Vote.objects.update_or_create(
         organization=org,
-        user=request.user,
+        user=request.auth,
         content_type=content_type,
         object_id=data.object_id,
         defaults={'vote_type': data.vote_type}
@@ -173,7 +181,7 @@ def create_vote(request, org_id: int, data: VoteCreate):
 @organization_member_required
 def list_votes(request, org_id: int):
     org = get_object_or_404(Organization, id=org_id)
-    if not request.user.is_superuser and org.id != request.organization.id:
+    if not request.auth.is_superuser and org.id != request.organization.id:
         return Response({"message": "Forbidden"}, status=403)
     
     return org.vote_set.all()
