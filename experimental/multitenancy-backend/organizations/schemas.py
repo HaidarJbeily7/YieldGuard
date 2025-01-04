@@ -32,3 +32,18 @@ class OrganizationUserOut(Schema):
     metadata: dict
     created_at: datetime
     updated_at: datetime
+
+class VoteCreate(Schema):
+    vote_type: str
+    content_type_id: int
+    object_id: int
+
+class VoteOut(Schema):
+    id: int
+    organization_id: int
+    user_id: int
+    vote_type: str
+    content_type_id: int
+    object_id: int
+    created_at: datetime
+    updated_at: datetime

@@ -38,3 +38,20 @@ class OrganizationUser(models.Model):
 
     class Meta:
         unique_together = ['organization', 'user']
+
+class Vote(models.Model):
+    VOTE_CHOICES = [
+        ('upvote', 'Upvote'),
+        ('downvote', 'Downvote')
+    ]
+    
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    vote_type = models.CharField(max_length=10, choices=VOTE_CHOICES)
+    content_type = models.ForeignKey('contenttypes.ContentType', on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ['organization', 'user', 'content_type', 'object_id']
