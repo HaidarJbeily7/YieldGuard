@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { Transaction, TransactionDocument } from './schemas/transaction.schema';
 import { ConfigService } from '@nestjs/config';
 import { connect, keyStores } from 'near-api-js';
+import { AnomalyDetectionService } from './anomaly-detection.service';
 
 @Injectable()
 export class IndexingService implements OnModuleInit {
@@ -16,6 +17,7 @@ export class IndexingService implements OnModuleInit {
     @InjectModel(Transaction.name)
     private transactionModel: Model<TransactionDocument>,
     private configService: ConfigService,
+    private anomalyDetection: AnomalyDetectionService,
   ) {}
 
   async onModuleInit() {
@@ -132,7 +134,20 @@ export class IndexingService implements OnModuleInit {
       txHash: parsedTx.txHash,
     });
     if (!exists) {
-      await this.transactionModel.create(parsedTx);
+      const historicalData = await this.transactionModel
+        .find({ sender: parsedTx.sender })
+        .sort({ timestamp: -1 })
+        .limit(100)
+        .exec();
+
+      const anomalyResults = await this.anomalyDetection.detectAnomalies(parsedTx, historicalData);
+
+      const enrichedTx = {
+        ...parsedTx,
+        ...anomalyResults,
+      };
+
+      await this.transactionModel.create(enrichedTx);
       this.logger.log(`Transaction ${parsedTx.txHash} indexed successfully`);
     }
   }

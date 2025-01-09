@@ -7,17 +7,16 @@ export class AnomalyDetectionService {
 
   async detectAnomalies(transaction: Transaction, historicalData: Transaction[]) {
     const features = this.featureExtraction.extractFeatures(transaction, historicalData);
-    
     // Calculate anomaly score using weighted features
     const anomalyScore = this.calculateAnomalyScore(features);
-    
+
     // Classify anomaly type if score exceeds threshold
     const anomalyType = this.classifyAnomaly(features, anomalyScore);
-    
+
     return {
       anomalyScore,
       anomalyType,
-      anomalyFeatures: features
+      anomalyFeatures: features,
     };
   }
 
@@ -26,7 +25,7 @@ export class AnomalyDetectionService {
       volumeDeviation: 0.3,
       timePatternScore: 0.2,
       contractRiskScore: 0.3,
-      userBehaviorScore: 0.2
+      userBehaviorScore: 0.2,
     };
 
     return Object.entries(features).reduce((score, [key, value]) => {
@@ -51,4 +50,4 @@ export class AnomalyDetectionService {
 
     return anomalyTypes[dominantFeature.key];
   }
-} 
+}
