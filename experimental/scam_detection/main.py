@@ -1,39 +1,39 @@
 from datetime import datetime
+import asyncio
 from models.detector import TransactionScamDetector
 from utils.data_processor import TransactionDataProcessor
+import dotenv
+import os
 
-def main():
-    # Initialize detector
-    detector = TransactionScamDetector()
+dotenv.load_dotenv()
+
+async def main():
+    # Initialize detector with your OpenAI API key
+    detector = TransactionScamDetector(
+        api_key=os.getenv("OPENAI_API_KEY"),
+        use_ml=True,
+        use_llm=True
+    )
     
-    # Example transactions
-    test_transactions = [
-        {
-            'id': '1',
-            'source_account': 'user123',
-            'amount': 15000,
-            'timestamp': datetime.now(),
-            'description': 'Investment opportunity'
-        },
-        {
-            'id': '2',
-            'source_account': 'user123',
-            'amount': 500,
-            'timestamp': datetime.now(),
-            'description': 'Regular payment'
-        }
-    ]
+    # Example transaction
+    transaction = {
+        'id': '1',
+        'source_account': 'user123',
+        'amount': 15000,
+        'timestamp': datetime.now(),
+        'description': 'Urgent investment opportunity - guaranteed returns!',
+        'age_of_account': 5,
+        'previous_transaction_count': 2
+    }
     
-    # Preprocess transactions
-    processed_transactions = TransactionDataProcessor.preprocess_transactions(test_transactions)
+    # Analyze transaction
+    result = await detector.analyze_transaction_pattern(transaction)
     
-    # Scan for suspicious activity
-    results = detector.scan_transactions(processed_transactions)
-    
-    # Print results
-    print("Suspicious Transactions:", len(results['suspicious_transactions']))
-    print("High Frequency Groups:", len(results['high_frequency_groups']))
-    print("Risk Scores:", results['risk_scores'])
+    print("Analysis Result:")
+    print(f"Suspicious: {result['is_suspicious']}")
+    print(f"Risk Factors: {result['risk_factors']}")
+    print(f"Confidence: {result['confidence']}")
+    print(f"Detailed Analysis: {result['analysis']}")
 
 if __name__ == "__main__":
-    main() 
+    asyncio.run(main()) 
