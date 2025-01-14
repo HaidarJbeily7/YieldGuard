@@ -1,6 +1,4 @@
-import { HeroSection } from "./HeroSection/HeroSection";
 import { FeaturesGrid } from "./FeaturesGrid/FeaturesGrid";
-import { AnimatedBackground } from "./AnimatedBackground/AnimatedBackground";
 
 export function LandingPage() {
   return (
@@ -11,8 +9,6 @@ export function LandingPage() {
         overflow: "hidden",
       }}
     >
-      <AnimatedBackground />
-      <HeroSection />
       <FeaturesGrid />
     </div>
   );
