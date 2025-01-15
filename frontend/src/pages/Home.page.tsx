@@ -1,3 +1,4 @@
+import Carousel from "../components/Features/carousel/Carousel";
 import { FeatureGrid } from "../components/Features/grid/FeatureGrid";
 import { Header } from "../components/Header/Header";
 import { Hero } from "../components/Hero/Hero";
@@ -8,6 +9,7 @@ export function HomePage() {
       <Header />
       <Hero />
       <FeatureGrid />
+      <Carousel />
     </section>
   );
 }
