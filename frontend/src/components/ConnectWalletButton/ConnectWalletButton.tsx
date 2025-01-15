@@ -21,7 +21,7 @@ export const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
   className,
   textStyle,
   textClassName,
-  gradient = { from: "blue", to: "cyan", deg: 90 },
+  gradient = { from: "#36b9af", to: "cyan", deg: 90 },
   rightSection,
   text,
 }) => {
