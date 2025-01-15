@@ -7,7 +7,21 @@ const svgToDataUri = require("mini-svg-data-uri");
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        main: {
+          DEFAULT: "#3bc8bd",
+          dark10: "#35b4aa",
+          dark20: "#2fa097",
+          dark30: "#298c84",
+          dark40: "#237871",
+          light10: "#4fcec4",
+          light20: "#62d3ca",
+          light30: "#76d9d1",
+          light40: "#89ded7",
+        },
+      },
+    },
   },
   plugins: [
     // @ts-ignore
