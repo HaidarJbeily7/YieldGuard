@@ -1,9 +1,9 @@
-import { ConnectWalletButton } from "../components/ConnectWalletButton/ConnectWalletButton";
+import CommingSoon from "../components/Soon/CommingSoon";
 
 export function DashboardPage() {
   return (
     <>
-      <ConnectWalletButton />
+      <CommingSoon />
     </>
   );
 }
