@@ -1,8 +1,7 @@
 import { MaxWidthWrapper } from "../utils/MaxWidthWrapper";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 import { Text, Group } from "@mantine/core";
-import { ConnectWalletButton } from "../ConnectWalletButton/ConnectWalletButton";
+import NeuConnectButton from "../buttons/NeuConnectButton";
 
 export const Content = () => {
   return (
@@ -84,17 +83,7 @@ export const Content = () => {
         className="flex flex-col items-center gap-4 sm:flex-row"
       >
         <Group>
-          <ConnectWalletButton
-            text="Get Started"
-            size="xl"
-            style={{
-              transform: "scale(1)",
-              transition: "transform 0.2s ease-in-out",
-            }}
-            className="hover:scale-105"
-            gradient={{ from: "#41d7cb", to: "#2c9690" }}
-            rightSection={<ArrowRight size={20} />}
-          />
+          <NeuConnectButton />
 
           {/* <Button
             size="xl"
