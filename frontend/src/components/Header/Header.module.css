@@ -44,14 +44,10 @@
 }
 
 .dropdownFooter {
-  background-color: light-dark(
-    var(--mantine-color-gray-0),
-    var(--mantine-color-dark-7)
-  );
+  background-color: #09090b; /* Dark greenish background */
   margin: calc(var(--mantine-spacing-md) * -1);
   margin-top: var(--mantine-spacing-sm);
   padding: var(--mantine-spacing-md) calc(var(--mantine-spacing-md) * 2);
   padding-bottom: var(--mantine-spacing-xl);
-  border-top: 1px solid
-    light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-5));
+  border-top: 1px solid #41d7cb; /* Neutral border */
 }
