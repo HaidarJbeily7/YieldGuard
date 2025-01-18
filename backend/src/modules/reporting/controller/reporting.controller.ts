@@ -1,44 +1,42 @@
 import { Body, Controller, Get, HttpStatus, Inject, Post, PreconditionFailedException, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-
 import { Config, LoggerService, RestrictedGuard } from '../../common';
 import { Service } from '../../tokens';
+import { ReportingPipe } from '../flow';
+import { ReportingData, ReportingInput } from '../model';
+import { ReportingService } from '../service';
 
-import { PassengerPipe } from '../flow';
-import { PassengerData, PassengerInput } from '../model';
-import { PassengerService } from '../service';
-
-@Controller('passengers')
-@ApiTags('passenger')
+@Controller('reporting')
+@ApiTags('reporting')
 @ApiBearerAuth()
-export class PassengerController {
+export class ReportingController {
 
     public constructor(
         @Inject(Service.CONFIG)
         private readonly config: Config,
         private readonly logger: LoggerService,
-        private readonly passengerService: PassengerService
+        private readonly reportingService: ReportingService
     ) { }
 
     @Get()
     @ApiOperation({ summary: 'Find passengers' })
-    @ApiResponse({ status: HttpStatus.OK, isArray: true, type: PassengerData })
-    public async find(): Promise<PassengerData[]> {
+    @ApiResponse({ status: HttpStatus.OK, isArray: true, type: ReportingData })
+    public async find(): Promise<ReportingData[]> {
 
-        return this.passengerService.find();
+        return this.reportingService.find();
     }
 
     @Post()
     @UseGuards(RestrictedGuard)
-    @ApiOperation({ summary: 'Create passenger' })
-    @ApiResponse({ status: HttpStatus.CREATED, type: PassengerData })
-    public async create(@Body(PassengerPipe) input: PassengerInput): Promise<PassengerData> {
+    @ApiOperation({ summary: 'Create Reporting' })
+    @ApiResponse({ status: HttpStatus.CREATED, type: ReportingData })
+    public async create(@Body(ReportingPipe) input: ReportingInput): Promise<ReportingData> {
 
         if (this.config.PASSENGERS_ALLOWED === 'no') {
             throw new PreconditionFailedException('Not allowed to onboard passengers');
         }
 
-        const passenger = await this.passengerService.create(input);
+        const passenger = await this.reportingService.create(input);
         this.logger.info(`Created new passenger with ID ${passenger.id}`);
 
         return passenger;

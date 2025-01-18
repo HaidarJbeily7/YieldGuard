@@ -8,15 +8,16 @@ import * as request from 'supertest';
 
 import { App } from 'supertest/types';
 import { ApplicationModule } from '../../app.module';
+import { ReportType } from '../model';
 
 /**
- * Passenger API end-to-end tests
+ * Reporting API end-to-end tests
  *
- * This test suite performs end-to-end tests on the passenger API endpoints,
+ * This test suite performs end-to-end tests on the reporting API endpoints,
  * allowing us to test the behavior of the API and making sure that it fits
  * the requirements.
  */
-describe('Passenger API', () => {
+describe('Reporting API', () => {
 
     let app: INestApplication;
 
@@ -35,10 +36,10 @@ describe('Passenger API', () => {
         app.close()
     );
 
-    it('Should return empty passenger list', async () =>
+    it('Should return empty reports list', async () =>
 
         request(app.getHttpServer() as App)
-            .get('/passengers')
+            .get('/reporting')
             .expect(HttpStatus.OK)
             .then(response => {
                 expect(response.body).toBeInstanceOf(Array);
@@ -46,7 +47,7 @@ describe('Passenger API', () => {
             })
     );
 
-    it('Should insert new passenger in the API', async () => {
+    it('Should create new report in the API', async () => {
 
         const token = jwt.sign({ role: 'restricted' }, `${process.env.JWT_SECRET}`, {
             algorithm: 'HS256',
@@ -54,16 +55,18 @@ describe('Passenger API', () => {
         });
 
         return request(app.getHttpServer() as App)
-            .post('/passengers')
+            .post('/reporting')
             .set('Authorization', `Bearer ${token}`)
             .send({
-                firstName: 'John',
-                lastName: 'Doe'
+                reportType: ReportType.USER_REPORT,
+                reportData: 'Test report data',
+                userId: 1
             })
             .expect(HttpStatus.CREATED)
             .then(response => {
-                expect(response.body.firstName).toEqual('John');
-                expect(response.body.lastName).toEqual('Doe');
+                expect(response.body.reportType).toEqual(ReportType.USER_REPORT);
+                expect(response.body.reportData).toEqual('Test report data');
+                expect(response.body.userId).toEqual(1);
             });
     });
 

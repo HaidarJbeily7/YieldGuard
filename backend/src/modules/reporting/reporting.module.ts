@@ -1,19 +1,19 @@
 import { Module } from '@nestjs/common';
 
 import { CommonModule } from '../common';
-import { PassengerController } from './controller';
-import { PassengerService } from './service';
+import { ReportingController } from './controller';
+import { ReportingService } from './service';
 
 @Module({
     imports: [
         CommonModule,
     ],
     providers: [
-        PassengerService
+        ReportingService
     ],
     controllers: [
-        PassengerController
+        ReportingController
     ],
     exports: []
 })
-export class PassengerModule { }
+export class ReportingModule { }
