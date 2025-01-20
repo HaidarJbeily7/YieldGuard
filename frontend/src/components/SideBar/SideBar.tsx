@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { Dispatch, SetStateAction, useState, useContext } from "react";
 import {
   IconAlertHexagon,
   IconFileAnalytics,
@@ -15,7 +15,7 @@ import {
   IconSwitchHorizontal,
   IconUsers,
 } from "@tabler/icons-react";
-import { Text, SegmentedControl } from "@mantine/core";
+import { Text, SegmentedControl, Divider } from "@mantine/core";
 import classes from "./SideBar.module.css";
 import { WalletContext } from "../../context/WalletContext";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
@@ -48,9 +48,13 @@ const tabs: Record<
   ],
 };
 
-export function SideBar() {
+interface SideBarProps {
+  activeTab: string;
+  setActiveTab: Dispatch<SetStateAction<string>>;
+}
+
+export function SideBar({ activeTab, setActiveTab }: SideBarProps) {
   const [section, setSection] = useState<string>("account");
-  const [active, setActive] = useState("Billing");
   const { accountId, Logout } = useContext(WalletContext);
 
   const handleDisconnect = () => {
@@ -60,12 +64,12 @@ export function SideBar() {
   const links = tabs[section]?.map((item) => (
     <a
       className={classes.link}
-      data-active={item.label === active || undefined}
+      data-active={item.label === activeTab || undefined}
       href={item.link}
       key={item.label}
       onClick={(event) => {
         event.preventDefault();
-        setActive(item.label);
+        setActiveTab(item.label);
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
@@ -82,9 +86,12 @@ export function SideBar() {
           className={classes.title}
           c="dimmed"
           ta="center"
+          my={4}
         >
-          {accountId}
+          @{accountId}
         </Text>
+
+        <Divider my="xs" />
 
         <SegmentedControl
           hidden={true}

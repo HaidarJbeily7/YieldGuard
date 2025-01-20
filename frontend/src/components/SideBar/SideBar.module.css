@@ -11,7 +11,7 @@
 
 .navbarMain {
   flex: 1;
-  margin-top: var(--mantine-spacing-xl);
+  margin-top: var(--mantine-spacing-sm);
 }
 
 .title {
