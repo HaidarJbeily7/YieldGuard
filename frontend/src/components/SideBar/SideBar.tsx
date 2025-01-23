@@ -31,7 +31,7 @@ const tabs: Record<
 > = {
   account: [
     { link: "", label: "Your Activities", icon: IconFingerprint },
-    { link: "", label: "Report Activites", icon: IconAlertHexagon },
+    { link: "", label: "Report Activities", icon: IconAlertHexagon },
     { link: "", label: "Check Activities", icon: IconShieldSearch },
     { link: "", label: "Balances", icon: IconReceipt2 },
     { link: "", label: "Other Settings", icon: IconSettings },
