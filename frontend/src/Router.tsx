@@ -7,6 +7,7 @@ import { HomePage } from "./pages/Home.page";
 import { LoginPage } from "./pages/Auth.page";
 import { useUserStore } from "./store/user";
 import { DashboardPage } from "./pages/Dashboard.page";
+import { useMantineColorScheme } from "@mantine/core";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isAuth = useUserStore((state) => state.isLoggedIn);
@@ -36,5 +37,7 @@ const router = createBrowserRouter([
 ]);
 
 export function Router() {
+  const { setColorScheme } = useMantineColorScheme();
+  setColorScheme("dark");
   return <RouterProvider router={router} />;
 }
