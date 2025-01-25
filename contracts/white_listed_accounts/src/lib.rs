@@ -1,13 +1,14 @@
 use near_sdk::{log, near, AccountId, env};
 use std::collections::{HashSet, HashMap};
 
-
 #[near(serializers = [borsh, json])]
 #[derive(Default)]
 pub struct AccountMetadata {
     added_timestamp: u64,
     tier: WhitelistTier,
     total_interactions: u64,
+    organization_id: Option<String>,
+    state: AccountState,
 }
 
 #[near(serializers = [borsh, json])]
@@ -19,14 +20,24 @@ pub enum WhitelistTier {
     VIP,
 }
 
+#[near(serializers = [borsh, json])]
+#[derive(Default, PartialEq)]
+pub enum AccountState {
+    #[default]
+    Pending,
+    Approved,
+    Rejected,
+}
+
 #[near(contract_state)]
 pub struct Contract {
     owner_id: AccountId,
     whitelisted_accounts: HashSet<AccountId>,
     // Track when accounts were added and their tier level
     account_metadata: HashMap<AccountId, AccountMetadata>,
+    // Track organizations and their members
+    organizations: HashMap<String, HashSet<AccountId>>,
 }
-
 
 impl Default for Contract {
     fn default() -> Self {
@@ -34,6 +45,7 @@ impl Default for Contract {
             owner_id: env::predecessor_account_id(),
             whitelisted_accounts: HashSet::new(),
             account_metadata: HashMap::new(),
+            organizations: HashMap::new(),
         }
     }
 }
@@ -47,33 +59,74 @@ impl Contract {
             owner_id,
             whitelisted_accounts: HashSet::new(),
             account_metadata: HashMap::new(),
+            organizations: HashMap::new(),
         }
     }
 
-    pub fn add_to_whitelist(&mut self, account_id: AccountId) {
-        self.assert_owner();
-        self.whitelisted_accounts.insert(account_id.clone());
+    pub fn request_whitelist(&mut self, account_id: AccountId, organization_id: Option<String>) {
         self.account_metadata.insert(account_id.clone(), AccountMetadata {
             added_timestamp: env::block_timestamp(),
+            organization_id,
             ..Default::default()
         });
-        log!("Added {} to whitelist", account_id);
+        log!("Account {} requested whitelist approval", account_id);
     }
 
-    pub fn add_to_whitelist_with_tier(&mut self, account_id: AccountId, tier: WhitelistTier) {
+    pub fn approve_whitelist(&mut self, account_id: AccountId) {
+        self.assert_owner();
+        if let Some(metadata) = self.account_metadata.get_mut(&account_id) {
+            metadata.state = AccountState::Approved;
+            self.whitelisted_accounts.insert(account_id.clone());
+
+            // Add to organization if specified
+            if let Some(org_id) = &metadata.organization_id {
+                self.organizations
+                    .entry(org_id.clone())
+                    .or_default()
+                    .insert(account_id.clone());
+            }
+        }
+        log!("Approved {} for whitelist", account_id);
+    }
+
+    pub fn reject_whitelist(&mut self, account_id: AccountId) {
+        self.assert_owner();
+        if let Some(metadata) = self.account_metadata.get_mut(&account_id) {
+            metadata.state = AccountState::Rejected;
+        }
+        log!("Rejected {} for whitelist", account_id);
+    }
+
+    pub fn add_to_whitelist_with_tier(&mut self, account_id: AccountId, tier: WhitelistTier, organization_id: Option<String>) {
         self.assert_owner();
         self.whitelisted_accounts.insert(account_id.clone());
         self.account_metadata.insert(account_id.clone(), AccountMetadata {
             added_timestamp: env::block_timestamp(),
             tier,
             total_interactions: 0,
+            organization_id: organization_id.clone(),
+            state: AccountState::Approved,
         });
+
+        if let Some(org_id) = organization_id {
+            self.organizations
+                .entry(org_id)
+                .or_default()
+                .insert(account_id.clone());
+        }
         log!("Added {} to whitelist with custom tier", account_id);
     }
 
     pub fn remove_from_whitelist(&mut self, account_id: AccountId) {
         self.assert_owner();
         self.whitelisted_accounts.remove(&account_id);
+        if let Some(metadata) = self.account_metadata.get(&account_id) {
+            if let Some(org_id) = &metadata.organization_id {
+                if let Some(org_members) = self.organizations.get_mut(org_id) {
+                    org_members.remove(&account_id);
+                }
+            }
+        }
         self.account_metadata.remove(&account_id);
         log!("Removed {} from whitelist", account_id);
     }
@@ -90,8 +143,19 @@ impl Contract {
         self.account_metadata.get(&account_id)
     }
 
+    pub fn get_organization_members(&self, organization_id: String) -> Vec<AccountId> {
+        self.organizations
+            .get(&organization_id)
+            .map(|members| members.iter().cloned().collect())
+            .unwrap_or_default()
+    }
+
     pub fn record_interaction(&mut self, account_id: AccountId) {
         if let Some(metadata) = self.account_metadata.get_mut(&account_id) {
+            if metadata.state != AccountState::Approved {
+                return;
+            }
+            
             metadata.total_interactions += 1;
             
             // Auto-upgrade tiers based on interactions
@@ -138,7 +202,7 @@ mod tests {
     }
 
     #[test]
-    fn test_add_to_whitelist() {
+    fn test_whitelist_flow() {
         let owner: AccountId = "owner.near".parse().unwrap();
         let context = get_context(owner.clone());
         testing_env!(context.build());
@@ -146,9 +210,33 @@ mod tests {
         let mut contract = Contract::new(owner);
         let account: AccountId = "alice.near".parse().unwrap();
         
-        contract.add_to_whitelist(account.clone());
-        assert!(contract.is_whitelisted(account.clone()));
-        assert_eq!(contract.get_whitelist().len(), 1);
+        // Request whitelist
+        contract.request_whitelist(account.clone(), None);
+        let metadata = contract.get_account_metadata(account.clone()).unwrap();
+        assert!(matches!(metadata.state, AccountState::Pending));
+        
+        // Approve whitelist
+        contract.approve_whitelist(account.clone());
+        let metadata = contract.get_account_metadata(account.clone()).unwrap();
+        assert!(matches!(metadata.state, AccountState::Approved));
+        assert!(contract.is_whitelisted(account));
+    }
+
+    #[test]
+    fn test_organization_support() {
+        let owner: AccountId = "owner.near".parse().unwrap();
+        let context = get_context(owner.clone());
+        testing_env!(context.build());
+
+        let mut contract = Contract::new(owner);
+        let account: AccountId = "alice.near".parse().unwrap();
+        let org_id = "org1".to_string();
+        
+        contract.add_to_whitelist_with_tier(account.clone(), WhitelistTier::Premium, Some(org_id.clone()));
+        
+        let members = contract.get_organization_members(org_id);
+        assert_eq!(members.len(), 1);
+        assert!(members.contains(&account));
     }
 
     #[test]
@@ -159,13 +247,14 @@ mod tests {
 
         let mut contract = Contract::new(owner);
         let account: AccountId = "alice.near".parse().unwrap();
+        let org_id = "org1".to_string();
         
-        contract.add_to_whitelist(account.clone());
+        contract.add_to_whitelist_with_tier(account.clone(), WhitelistTier::Premium, Some(org_id.clone()));
         assert!(contract.is_whitelisted(account.clone()));
         
         contract.remove_from_whitelist(account.clone());
         assert!(!contract.is_whitelisted(account));
-        assert_eq!(contract.get_whitelist().len(), 0);
+        assert_eq!(contract.get_organization_members(org_id).len(), 0);
     }
 
     #[test]
@@ -182,23 +271,7 @@ mod tests {
         testing_env!(context.build());
 
         let account: AccountId = "alice.near".parse().unwrap();
-        contract.add_to_whitelist(account);
-    }
-
-    #[test]
-    fn test_add_to_whitelist_with_tier() {
-        let owner: AccountId = "owner.near".parse().unwrap();
-        let context = get_context(owner.clone());
-        testing_env!(context.build());
-
-        let mut contract = Contract::new(owner);
-        let account: AccountId = "alice.near".parse().unwrap();
-        
-        contract.add_to_whitelist_with_tier(account.clone(), WhitelistTier::Premium);
-        assert!(contract.is_whitelisted(account.clone()));
-        
-        let metadata = contract.get_account_metadata(account).unwrap();
-        assert!(matches!(metadata.tier, WhitelistTier::Premium));
+        contract.add_to_whitelist_with_tier(account, WhitelistTier::Basic, None);
     }
 
     #[test]
@@ -210,7 +283,8 @@ mod tests {
         let mut contract = Contract::new(owner);
         let account: AccountId = "alice.near".parse().unwrap();
         
-        contract.add_to_whitelist(account.clone());
+        contract.request_whitelist(account.clone(), None);
+        contract.approve_whitelist(account.clone());
         
         // Record 100 interactions to upgrade to Premium
         for _ in 0..100 {
@@ -241,10 +315,11 @@ mod tests {
         // Test non-existent account
         assert!(contract.get_account_metadata(account.clone()).is_none());
         
-        // Add account and verify metadata
-        contract.add_to_whitelist(account.clone());
+        // Request whitelist and verify metadata
+        contract.request_whitelist(account.clone(), None);
         let metadata = contract.get_account_metadata(account).unwrap();
         assert_eq!(metadata.total_interactions, 0);
         assert!(matches!(metadata.tier, WhitelistTier::Basic));
+        assert!(matches!(metadata.state, AccountState::Pending));
     }
 }

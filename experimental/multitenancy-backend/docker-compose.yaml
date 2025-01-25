@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=mysite
+      - POSTGRES_USER=mysite
+      - POSTGRES_PASSWORD=mysite
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  web:
+    build: .
+    command: python -m gunicorn config.asgi:application -k uvicorn.workers.UvicornWorker
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://mysite:mysite@db:5432/mysite
+      - SECRET_KEY=${SECRET_KEY}
+      - WEB_CONCURRENCY=4
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

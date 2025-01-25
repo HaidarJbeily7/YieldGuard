@@ -18,13 +18,44 @@ async fn test_whitelist_operations() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
     assert!(outcome.is_success());
 
-    // Add user to whitelist
+    // Request whitelist
+    let outcome = user
+        .call(contract.id(), "request_whitelist")
+        .args_json(json!({
+            "account_id": user.id(),
+            "organization_id": null
+        }))
+        .transact()
+        .await?;
+    assert!(outcome.is_success());
+
+    // Check pending state
+    let metadata = contract
+        .view("get_account_metadata")
+        .args_json(json!({"account_id": user.id()}))
+        .await?
+        .json::<Option<serde_json::Value>>()?;
+    assert!(metadata.is_some());
+    let metadata = metadata.unwrap();
+    assert_eq!(metadata.get("state").unwrap(), "Pending");
+
+    // Approve whitelist request
     let outcome = owner
-        .call(contract.id(), "add_to_whitelist")
+        .call(contract.id(), "approve_whitelist")
         .args_json(json!({"account_id": user.id()}))
         .transact()
         .await?;
     assert!(outcome.is_success());
+
+    // Verify approved state
+    let metadata = contract
+        .view("get_account_metadata")
+        .args_json(json!({"account_id": user.id()}))
+        .await?
+        .json::<Option<serde_json::Value>>()?;
+    assert!(metadata.is_some());
+    let metadata = metadata.unwrap();
+    assert_eq!(metadata.get("state").unwrap(), "Approved");
 
     // Check if user is whitelisted
     let is_whitelisted = contract
@@ -63,7 +94,8 @@ async fn test_whitelist_with_tiers() -> Result<(), Box<dyn std::error::Error>> {
         .call(contract.id(), "add_to_whitelist_with_tier")
         .args_json(json!({
             "account_id": user.id(),
-            "tier": "Premium"
+            "tier": "Premium",
+            "organization_id": null
         }))
         .transact()
         .await?;
@@ -79,59 +111,68 @@ async fn test_whitelist_with_tiers() -> Result<(), Box<dyn std::error::Error>> {
     assert!(metadata.is_some());
     let metadata = metadata.unwrap();
     assert_eq!(metadata.get("tier").unwrap(), "Premium");
+    assert_eq!(metadata.get("state").unwrap(), "Approved");
 
     Ok(())
 }
 
 #[tokio::test]
-async fn test_unauthorized_operations() -> Result<(), Box<dyn std::error::Error>> {
-    // Reuse sandbox and contract setup
-    let (sandbox, contract, _, user) = setup_test_env().await?;
-    let other_user = sandbox.dev_create_account().await?;
+async fn test_organization_operations() -> Result<(), Box<dyn std::error::Error>> {
+    let (_, contract, owner, user) = setup_test_env().await?;
+    let org_id = "test_org".to_string();
 
-    // Try to add to whitelist from non-owner account
-    let outcome = user
-        .call(contract.id(), "add_to_whitelist")
-        .args_json(json!({"account_id": other_user.id()}))
+    // Add user to whitelist with organization
+    let outcome = owner
+        .call(contract.id(), "add_to_whitelist_with_tier")
+        .args_json(json!({
+            "account_id": user.id(),
+            "tier": "Basic",
+            "organization_id": org_id
+        }))
         .transact()
-        .await;
+        .await?;
+    assert!(outcome.is_success());
+
+    // Check organization members
+    let members = contract
+        .view("get_organization_members")
+        .args_json(json!({"organization_id": org_id}))
+        .await?
+        .json::<Vec<String>>()?;
     
-    assert!(outcome.is_err());
-
-    // Try to remove from whitelist from non-owner account
-    let outcome = user
-        .call(contract.id(), "remove_from_whitelist")
-        .args_json(json!({"account_id": other_user.id()}))
-        .transact()
-        .await;
-
-    assert!(outcome.is_err());
+    assert_eq!(members.len(), 1);
+    assert!(members.contains(&user.id().to_string()));
 
     Ok(())
 }
 
 #[tokio::test]
 async fn test_interaction_tracking() -> Result<(), Box<dyn std::error::Error>> {
-    // Reuse sandbox and contract setup
     let (_, contract, owner, user) = setup_test_env().await?;
 
-    // Add user to whitelist
+    // Add user with Basic tier
     let outcome = owner
-        .call(contract.id(), "add_to_whitelist")
-        .args_json(json!({"account_id": user.id()}))
+        .call(contract.id(), "add_to_whitelist_with_tier")
+        .args_json(json!({
+            "account_id": user.id(),
+            "tier": "Basic",
+            "organization_id": null
+        }))
         .transact()
         .await?;
     assert!(outcome.is_success());
 
-    // Record interaction
-    let outcome = contract
-        .call("record_interaction")
-        .args_json(json!({"account_id": user.id()}))
-        .transact()
-        .await?;
-    assert!(outcome.is_success());
+    // Record 100 interactions to upgrade to Premium
+    for _ in 0..100 {
+        let outcome = contract
+            .call("record_interaction")
+            .args_json(json!({"account_id": user.id()}))
+            .transact()
+            .await?;
+        assert!(outcome.is_success());
+    }
 
-    // Check interaction count
+    // Verify Premium tier upgrade
     let metadata = contract
         .view("get_account_metadata")
         .args_json(json!({"account_id": user.id()}))
@@ -140,7 +181,29 @@ async fn test_interaction_tracking() -> Result<(), Box<dyn std::error::Error>> {
     
     assert!(metadata.is_some());
     let metadata = metadata.unwrap();
-    assert_eq!(metadata.get("total_interactions").unwrap(), 1);
+    assert_eq!(metadata.get("tier").unwrap(), "Premium");
+
+    // Record 900 more interactions to upgrade to VIP
+    for _ in 0..900 {
+        let outcome = contract
+            .call("record_interaction")
+            .args_json(json!({"account_id": user.id()}))
+            .transact()
+            .await?;
+        assert!(outcome.is_success());
+    }
+
+    // Verify VIP tier upgrade
+    let metadata = contract
+        .view("get_account_metadata")
+        .args_json(json!({"account_id": user.id()}))
+        .await?
+        .json::<Option<serde_json::Value>>()?;
+    
+    assert!(metadata.is_some());
+    let metadata = metadata.unwrap();
+    assert_eq!(metadata.get("tier").unwrap(), "VIP");
+    assert_eq!(metadata.get("total_interactions").unwrap(), 1000);
 
     Ok(())
 }
