@@ -1,9 +1,9 @@
-import CommingSoon from "../components/Soon/CommingSoon";
+import { SideBar } from "../components/SideBar/SideBar";
 
 export function DashboardPage() {
   return (
     <>
-      <CommingSoon />
+      <SideBar />
     </>
   );
 }
