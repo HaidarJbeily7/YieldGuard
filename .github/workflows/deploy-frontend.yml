@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'frontend/**'
+      - "frontend/**"
 
 jobs:
   deploy:
@@ -37,6 +37,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
+            sudo chown -R ubuntu:ubuntu ~/react-app
             docker stop react-app || true
             docker rm react-app || true
             tar -xvf ~/react-app/react-app.tar -C ~/react-app
