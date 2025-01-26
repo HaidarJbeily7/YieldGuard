@@ -10,6 +10,10 @@
   margin-top: 1.4rem;
 }
 
+.ReportButton:hover {
+  cursor: pointer;
+}
+
 .ReportButtonSpan {
   position: relative;
   display: flex;
@@ -24,6 +28,7 @@
   color: #fff;
   border: 0.08em solid #3bc8bd;
   box-shadow: 0 0.4em 0.1em 0.019em #3bc8bd;
+  cursor: pointer;
 }
 
 .ReportButtonSpan:hover {
@@ -31,6 +36,7 @@
   transform: translate(0, 0.4em);
   box-shadow: 0 0 0 0 red;
   border: 0.08em solid red;
+  cursor: pointer;
 }
 
 .ReportButtonSpan:not(hover) {
