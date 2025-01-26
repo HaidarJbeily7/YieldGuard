@@ -4,26 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { ReportCard } from "./ReportCard";
 import { ReportInput } from "./ReportInput";
 import { ReportButton } from "./ReportButton";
+import { reportsData } from "./ReportsData";
 
 export function ReportActivities() {
-  const [reports, setReports] = useState([
-    {
-      id: "1",
-      account: "suspicious.near",
-      yesVotes: 10,
-      noVotes: 5,
-      deadline: "2025-02-10T00:00:00.000Z",
-      staked: 100,
-    },
-    {
-      id: "2",
-      account: "malicious.near",
-      yesVotes: 7,
-      noVotes: 8,
-      deadline: "2025-02-15T00:00:00.000Z",
-      staked: 50,
-    },
-  ]);
+  const [reports, setReports] = useState(reportsData);
 
   const [newReport, setNewReport] = useState({
     account: "",
