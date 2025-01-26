@@ -8,11 +8,14 @@ class Organization(models.Model):
         ('active', 'Active'),
         ('rejected', 'Rejected')
     ]
+    company_name = models.CharField(max_length=255)
     status = models.CharField(
         max_length=20, 
         choices=STATUS_CHOICES,
         default='pending'
     )
+    yearly_travel_spending = models.FloatField(default=0)
+    default_currency = models.CharField(max_length=3, default='OMR')
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     subdomain = models.CharField(max_length=100, unique=True)
     is_active = models.BooleanField(default=False)
@@ -20,7 +23,7 @@ class Organization(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.name
+        return self.company_name
 
 class OrganizationUser(models.Model):
     ROLE_CHOICES = [
@@ -31,27 +34,14 @@ class OrganizationUser(models.Model):
 
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    metadata = models.JSONField(default=dict, blank=True, help_text="Additional metadata about the organization user")
+    job_title = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=20)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.user.email} - {self.organization.company_name} - {self.user.get_full_name()}"
+    
     class Meta:
         unique_together = ['organization', 'user']
-
-class Vote(models.Model):
-    VOTE_CHOICES = [
-        ('upvote', 'Upvote'),
-        ('downvote', 'Downvote')
-    ]
-    
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    vote_type = models.CharField(max_length=10, choices=VOTE_CHOICES)
-    content_type = models.ForeignKey('contenttypes.ContentType', on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        unique_together = ['organization', 'user', 'content_type', 'object_id']
