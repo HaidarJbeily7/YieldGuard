@@ -1,9 +1,14 @@
-# routers/api.py
-from ninja import NinjaAPI
-from users.views import user_router
-from organizations.views import router as organization_router
+from users.controllers import UserController
+from organizations.controllers import OrganizationController
+from ninja_jwt.controller import NinjaJWTDefaultController
+from ninja_extra import NinjaExtraAPI
+from django.conf import settings
 
-api = NinjaAPI()
+api = NinjaExtraAPI(title="Darrbak API", version=settings.VERSION or "1.0.0")
 
-api.add_router("/users/", user_router, tags=["Users API"])
-api.add_router("/organizations/", organization_router, tags=["Organizations API"])
+
+api.register_controllers(
+    NinjaJWTDefaultController,
+    UserController,
+    OrganizationController
+)

@@ -1,0 +1,14 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "darrbak-api",
+    "Update": "true"
+  },
+  "Logging": "/var/log/nginx",
+  "Volumes": [
+    {
+      "HostDirectory": "/var/app/current",
+      "ContainerDirectory": "/code"
+    }
+  ]
+}
