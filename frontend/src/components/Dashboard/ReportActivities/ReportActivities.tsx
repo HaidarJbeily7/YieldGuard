@@ -62,7 +62,7 @@ export function ReportActivities() {
           <Grid.Col span={4} key={report.id}>
             <ReportCard
               report={report}
-              onNavigate={(id) => navigate(`/reports/${id}`)}
+              onNavigate={(id) => navigate(`/report/${id}`)}
             />
           </Grid.Col>
         ))}
