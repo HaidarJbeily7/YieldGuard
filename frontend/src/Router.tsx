@@ -8,6 +8,7 @@ import { LoginPage } from "./pages/Auth.page";
 import { useUserStore } from "./store/user";
 import { DashboardPage } from "./pages/Dashboard.page";
 import { useMantineColorScheme } from "@mantine/core";
+import { ReportPage } from "./pages/Reort.page";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isAuth = useUserStore((state) => state.isLoggedIn);
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <DashboardPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/report/:reportId",
+    element: (
+      <ProtectedRoute>
+        <ReportPage />
       </ProtectedRoute>
     ),
   },
