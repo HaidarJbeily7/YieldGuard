@@ -54,7 +54,7 @@ jobs:
         JWT_SECRET: test-secret
         JWT_ISSUER: test-issuer
         HEALTH_TOKEN: test-token
-      run: npm run test
+      run: jest --config=jest.json
 
     - name: Build
       working-directory: backend
