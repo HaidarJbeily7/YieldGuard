@@ -6,6 +6,7 @@ from ninja_extra import NinjaExtraAPI
 from django.conf import settings
 from django_rest_passwordreset.controller import ResetPasswordController
 from scalar_django_ninja import ScalarViewer
+from reports.controllers import ReportController
 
 api = NinjaExtraAPI(
     version="1.0.0",
@@ -21,4 +22,5 @@ api.register_controllers(
     OrganizationController,
     ResetPasswordController,
     PublicCoreController,
+    ReportController,
 )
