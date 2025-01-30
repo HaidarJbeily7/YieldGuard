@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AuthService } from '../service/auth.service';
 import { VerifyNearAccountDto } from '../dto/verify-near-account.dto';
+import { AuthService } from '../service/auth.service';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -12,7 +12,7 @@ export class AuthController {
     @ApiOperation({ summary: 'Verify NEAR account ownership' })
     @ApiResponse({ status: 200, description: 'Returns JWT token if verification successful' })
     public async verifyNearAccount(@Body() dto: VerifyNearAccountDto): Promise<{ token: string }> {
-        const isValid = await this.authService.verifyNearAccount(
+        const isValid = this.authService.verifyNearAccount(
             dto.challenge,
             dto.signature,
             dto.publicKey
