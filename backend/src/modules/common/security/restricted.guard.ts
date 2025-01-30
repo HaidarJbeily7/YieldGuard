@@ -14,8 +14,9 @@ export class RestrictedGuard implements CanActivate {
             return false;
         }
 
-        // @ts-expect-error it's ok
-        return payload.role === Role.RESTRICTED && payload.nearWallet !== undefined;
+        return payload.role === Role.RESTRICTED;
+        // TODO: add near wallet check
+        // && payload.nearWallet !== undefined;
     }
 
 }
