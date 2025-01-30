@@ -6,12 +6,12 @@ import { VerifyNearAccountDto } from '../dto/verify-near-account.dto';
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) {}
+    public constructor(private readonly authService: AuthService) {}
 
     @Post('verify')
     @ApiOperation({ summary: 'Verify NEAR account ownership' })
     @ApiResponse({ status: 200, description: 'Returns JWT token if verification successful' })
-    async verifyNearAccount(@Body() dto: VerifyNearAccountDto) {
+    public async verifyNearAccount(@Body() dto: VerifyNearAccountDto): Promise<{ token: string }> {
         const isValid = await this.authService.verifyNearAccount(
             dto.challenge,
             dto.signature,
@@ -25,4 +25,4 @@ export class AuthController {
         const token = await this.authService.createAuthToken(dto.nearWallet);
         return { token };
     }
-} 
+}

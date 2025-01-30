@@ -1,31 +1,37 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../common';
-import * as jwt from 'jsonwebtoken';
 import { verify } from '@near-js/crypto';
+import * as jwt from 'jsonwebtoken';
+import { PrismaService } from '../../common';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly prisma: PrismaService) {}
+    public constructor(private readonly prisma: PrismaService) {}
 
-    async verifyNearAccount(challenge: string, signature: string, publicKey: string): Promise<boolean> {
+    public async verifyNearAccount(challenge: string, signature: string, publicKey: string): Promise<boolean> {
         try {
-            return verify(Buffer.from(signature, 'base64'), Buffer.from(challenge), publicKey);
+            const result = verify(Buffer.from(signature, 'base64'), Buffer.from(challenge), publicKey);
+            return Boolean(result);
         } catch {
             return false;
         }
     }
 
-    async createAuthToken(nearWallet: string): Promise<string> {
+    public async createAuthToken(nearWallet: string): Promise<string> {
         const user = await this.prisma.user.upsert({
             where: { nearWallet },
             update: { lastSignIn: new Date() },
             create: { nearWallet }
         });
 
+        const jwtSecret = process.env.JWT_SECRET;
+        if (!jwtSecret) {
+            throw new Error('JWT_SECRET environment variable is not set');
+        }
+
         return jwt.sign(
             { userId: user.id, nearWallet, role: 'restricted' },
-            process.env.JWT_SECRET!,
-            { 
+            jwtSecret,
+            {
                 algorithm: 'HS256',
                 issuer: process.env.JWT_ISSUER,
                 expiresIn: '24h'
