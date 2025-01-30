@@ -23,7 +23,6 @@ class OrganizationMiddleware:
                     # Cache organization lookup
                     request.organization = Organization.objects.select_related().get(
                         subdomain=subdomain,
-                        is_active=True
                     )
                 except Organization.DoesNotExist:
                     # Log invalid subdomain attempt if needed
