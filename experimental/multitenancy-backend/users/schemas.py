@@ -10,9 +10,14 @@ class OrganizationUserDetails(Schema):
     organization: OrganizationOutput
     role: str
     job_title: str
-    phone_number: str
     
 
 class UserInfo(Schema):
-    user: UserOutput
-    organization_user_details: Optional[OrganizationUserDetails]
+    id: int
+    first_name: str
+    last_name: str
+    email: str
+    is_superuser: bool
+    role: Optional[str]
+    job_title: Optional[str]
+    organization: Optional[OrganizationOutput]

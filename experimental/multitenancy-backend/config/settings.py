@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     "ninja_extra",
     "ninja_jwt.token_blacklist",
     "corsheaders",
+    'django_rest_passwordreset',
+    "core",
 ]
 
 MIDDLEWARE = [
@@ -79,7 +81,7 @@ LOGIN_URL = "/login/"
 
 # CSRF_COOKIE_SECURE = True  # Ensure this is set to True for HTTPS
 CSRF_COOKIE_HTTPONLY = True
-CSRF_TRUSTED_ORIGINS = ["https://darrbak.site/"]
+CSRF_TRUSTED_ORIGINS = ["https://api.darrbakplus.com/"]
 
 TEMPLATES = [
     {
@@ -182,11 +184,10 @@ if not DEBUG:
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-MAIN_DOMAIN = "darrbak.site"
-DEFAULT_FROM_EMAIL = "no-reply@darrbak.site"
+MAIN_DOMAIN = os.environ.get("MAIN_DOMAIN", "https://api.darrbakplus.com")
 
 VERSION = "1.0.0"
-
+print(MAIN_DOMAIN)
 
 NINJA_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
@@ -231,3 +232,14 @@ AUTHENTICATION_BACKENDS = [
 CORS_ALLOW_ALL_ORIGINS = True
 
 APPEND_SLASH = False
+
+EMAIL_BACKEND = 'django_ses.SESBackend'
+
+DEFAULT_FROM_EMAIL= 'no-reply@darrbakplus.com'
+AWS_SES_REGION_NAME = 'ap-south-1'
+AWS_SES_REGION_ENDPOINT = 'email.ap-south-1.amazonaws.com'
+AWS_SES_ACCESS_KEY_ID = os.environ.get('AWS_SES_ACCESS_KEY_ID', '')
+AWS_SES_SECRET_ACCESS_KEY = os.environ.get('AWS_SES_SECRET_ACCESS_KEY', '')
+USE_SES_V2 = True
+
+SERPER_API_KEY = os.environ.get('SERPER_API_KEY', '')

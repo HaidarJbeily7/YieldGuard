@@ -1,11 +1,8 @@
 from ninja import Schema
 from datetime import datetime
 from typing import Optional
-from pydantic import EmailStr
-class TokenOutput(Schema):
-    access: str
-    refresh: str
-
+from pydantic import EmailStr, Field
+from typing import List
 
 class OrganizationCreateInput(Schema):
     first_name: str
@@ -13,12 +10,19 @@ class OrganizationCreateInput(Schema):
     job_title: str
     company_name: str
     work_email: EmailStr
-    password: str
     phone_number: str
     yearly_travel_spending: float
     
 class BadRequest(Schema):
     message: str
+
+class ApplicantOutput(Schema):
+    id: int
+    name: str
+    email: str
+    job_title: str
+    phone_number: str
+
 
 class OrganizationOutput(Schema):
     id: int
@@ -27,7 +31,7 @@ class OrganizationOutput(Schema):
     yearly_travel_spending: float
     default_currency: str
     subdomain: str
-    is_active: bool
+    applicant: ApplicantOutput
 
 
 class UserOutput(Schema):
@@ -36,12 +40,12 @@ class UserOutput(Schema):
     last_name: str
     email: str
     username: str
+    is_superuser: bool
 
 class OrganizationCreateOutput(Schema):
     user: UserOutput
     organization: OrganizationOutput
     role: str
-    tokens: TokenOutput
 
 class OrganizationUpdate(Schema):
     name: Optional[str]
@@ -50,3 +54,30 @@ class OrganizationUpdate(Schema):
     contact_phone: Optional[str]
     status: Optional[str]
     is_active: Optional[bool]
+
+
+
+class OrganizationUserOutput(Schema):
+    id: int
+    first_name: str
+    last_name: str
+    email: str
+    job_title: str
+    role: str
+    password: str
+
+class OrganizationUpdateStatusInput(Schema):
+    org_id: int
+    status: str = Field(..., description="Organization status", enum=["pending", "test_mode", "active", "rejected"])
+
+class EmployeeOutput(Schema):
+    id: int
+    name: str
+    
+    
+class GroupOutput(Schema):
+    id: int
+    name: str
+    approver: OrganizationUserOutput
+    employees: List[EmployeeOutput]
+    

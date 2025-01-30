@@ -3,16 +3,16 @@ from django.conf import settings
 
 class OrganizationService:
     @staticmethod
-    def process_registration(organization):        
+    def process_registration(name, email):        
         send_mail(
             'Registration Confirmation',
-            f'Thank you for registering {organization.name}. '
+            f'Thank you for registering {name}. '
             'Your application is under review.',
             settings.DEFAULT_FROM_EMAIL,
-            [organization.contact_email],
+            [email],
             fail_silently=False,
         )
-        return organization
+        return
 
     @staticmethod
     def activate_test_mode(organization):
