@@ -4,7 +4,7 @@ import { balanceData } from "./BalaceData";
 import Token3D from "./Token3D";
 
 export function Balances() {
-  const [balances, setBalances] = useState<typeof balanceData | null>(null);
+  const [balances, setBalances] = useState<typeof balanceData>();
 
   useEffect(() => {
     setTimeout(() => {
