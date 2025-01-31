@@ -58,8 +58,9 @@ INSTALLED_APPS = [
     "ninja_extra",
     "ninja_jwt.token_blacklist",
     "corsheaders",
-    'django_rest_passwordreset',
+    "django_rest_passwordreset",
     "core",
+    'reports.apps.ReportsConfig',
 ]
 
 MIDDLEWARE = [
