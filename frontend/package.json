@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mantine/charts": "^7.16.2",
     "@mantine/core": "^7.15.1",
     "@mantine/hooks": "^7.15.1",
     "@near-wallet-selector/bitget-wallet": "^8.9.15",
@@ -19,6 +20,7 @@
     "@near-wallet-selector/my-near-wallet": "^8.9.15",
     "@tabler/icons-react": "^3.26.0",
     "autoprefixer": "^10.4.20",
+    "axios": "^1.7.9",
     "framer-motion": "^11.18.0",
     "lucide-react": "^0.469.0",
     "mini-svg-data-uri": "^1.4.4",
@@ -27,6 +29,7 @@
     "react-icons": "^5.4.0",
     "react-router-dom": "^7.0.2",
     "react-use-measure": "^2.1.1",
+    "swr": "^2.3.0",
     "tailwind-merge": "^2.6.0",
     "vite-plugin-node-browser": "^0.0.6",
     "zustand": "^5.0.2"
