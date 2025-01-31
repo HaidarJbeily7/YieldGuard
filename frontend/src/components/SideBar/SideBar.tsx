@@ -10,7 +10,7 @@ import {
   IconMessages,
   IconReceipt2,
   IconReceiptRefund,
-  IconSettings,
+  // IconSettings,
   IconShoppingCart,
   IconSwitchHorizontal,
   IconUsers,
