@@ -34,7 +34,7 @@ const tabs: Record<
     { link: "", label: "Report Activities", icon: IconAlertHexagon },
     { link: "", label: "Check Activities", icon: IconShieldSearch },
     { link: "", label: "Balances", icon: IconReceipt2 },
-    { link: "", label: "Other Settings", icon: IconSettings },
+    // { link: "", label: "Other Settings", icon: IconSettings },
   ],
   general: [
     // To Be Used Later
