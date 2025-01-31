@@ -24,21 +24,20 @@ const VoteCard = ({
       <div className="absolute top-4 right-4">
         <CloseReportButton />
       </div>
-
       {/* Report Title */}
       <h2 className="text-2xl font-bold mb-4">
         Community Voting on Report #{reportId}
       </h2>
-
       {/* Reported Account */}
       <p className="text-lg text-gray-400">
         Reported Account:{" "}
         <span className="font-semibold text-white">{account}</span>
       </p>
-
       {/* Voting Section */}
       <BarPoll />
-
+      <div className="hidden">
+        Those Votes should be passed to BarPill {yesVotes} {noVotes}
+      </div>
       {/* Report Details */}
       <div className="flex justify-between mt-6 text-gray-300">
         <p>
