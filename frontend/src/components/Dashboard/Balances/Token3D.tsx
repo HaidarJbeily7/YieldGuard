@@ -1,7 +1,7 @@
-import "./Token3D.css"; // Import styles
+import "./Token3D.css";
 
 interface Token3DProps {
-  icon: string; // Base64 or URL
+  icon: string;
   altText?: string;
 }
 
