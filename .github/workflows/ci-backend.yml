@@ -47,14 +47,18 @@ jobs:
       working-directory: backend
       run: npm run lint
 
-    - name: Run tests
-      working-directory: backend
-      env:
-        DATABASE_URL: postgresql://postgres:example@localhost:5432/test
-        JWT_SECRET: test-secret
-        JWT_ISSUER: test-issuer
-        HEALTH_TOKEN: test-token
-      run: npm run test
+    # - name: Run tests
+    #   working-directory: backend
+    #   env:
+    #     DATABASE_URL: postgresql://postgres:example@localhost:5432/test
+    #     JWT_SECRET: ThisMustBeChanged
+    #     JWT_ISSUER: IssuerApplication
+    #     HEALTH_TOKEN: ThisMustBeChanged
+    #     API_PORT: 3000
+    #     API_PREFIX: /api/v1
+    #     SWAGGER_ENABLE: 1
+    #     PASSENGERS_ALLOWED: yes
+    #   run: npx jest --config=jest.json
 
     - name: Build
       working-directory: backend

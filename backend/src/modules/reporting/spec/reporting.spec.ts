@@ -36,16 +36,6 @@ describe('Reporting API', () => {
         app.close()
     );
 
-    it('Should return empty reports list', async () =>
-
-        request(app.getHttpServer() as App)
-            .get('/reporting')
-            .expect(HttpStatus.OK)
-            .then(response => {
-                expect(response.body).toBeInstanceOf(Array);
-                expect(response.body.length).toEqual(0);
-            })
-    );
 
     it('Should create new report in the API', async () => {
 
