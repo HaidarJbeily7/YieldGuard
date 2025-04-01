@@ -36,7 +36,13 @@ const tabs = {
   ],
 };
 
-export function SideBar({ activeTab, setActiveTab }) {
+interface SideBarProps {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}
+
+export function SideBar({ activeTab, setActiveTab }: SideBarProps) {
+
   const [isOpen, setIsOpen] = useState(true);
   const { accountId, Logout } = useContext(WalletContext);
 
