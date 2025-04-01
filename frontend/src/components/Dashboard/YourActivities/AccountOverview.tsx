@@ -1,4 +1,4 @@
-import { Divider, Paper, Text } from "@mantine/core";
+import { Divider } from "@mantine/core";
 
 type AccountData = {
   account_id: string;
@@ -9,33 +9,24 @@ type AccountData = {
 
 export function AccountOverview({ accountData }: { accountData: AccountData }) {
   return (
-    <Paper
-      m="2rem"
-      p="1rem"
-      bg="#121215"
-      withBorder
-      radius="lg"
-      shadow="lg"
-      w="fit-content"
-    >
-      <Text fw={700}>Overview</Text>
-      <Divider my="md" />
-      <Text fw={300}>
+    <div className="m-8 p-6 bg-[#121215] text-white border border-gray-700 rounded-lg shadow-lg max-w-full w-[90%] sm:w-[400px] md:w-[500px] lg:w-[600px]">
+      <h2 className="text-lg font-bold">Overview</h2>
+      <Divider className="my-2" />
+      
+      <p className="text-sm">
         <b>Created On:</b>{" "}
-        {new Date(
-          Number(accountData.timestamp_creation) / 1e6
-        ).toLocaleString()}
-      </Text>
-      <Divider my="sm" />
-
-      <Text fw={300}>
+        {new Date(Number(accountData.timestamp_creation) / 1e6).toLocaleString()}
+      </p>
+      <Divider className="my-2" />
+      
+      <p className="text-sm break-all p-2 rounded-md overflow-hidden">
         <b>SHA Code:</b> {accountData.sha_code}
-      </Text>
-      <Divider my="sm" />
-
-      <Text fw={300}>
+      </p>
+      <Divider className="my-2" />
+      
+      <p className="text-sm">
         <b>Parent Account:</b> {accountData.parent}
-      </Text>
-    </Paper>
+      </p>
+    </div>
   );
 }

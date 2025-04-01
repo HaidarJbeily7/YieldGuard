@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Text, Group, ActionIcon } from "@mantine/core";
-import {
-  IconClipboardCopy,
-  IconClipboardCheckFilled,
-} from "@tabler/icons-react";
+import { Text, ActionIcon, Flex } from "@mantine/core"; // Use Flex instead of Group
+import { IconClipboardCopy, IconClipboardCheckFilled } from "@tabler/icons-react";
+import { useMediaQuery } from '@mantine/hooks';
 
 type AccountData = {
   account_id: string;
@@ -14,6 +12,7 @@ type AccountData = {
 
 export function AccountId({ accountData }: { accountData: AccountData }) {
   const [copied, setCopied] = useState(false);
+  const isSmallScreen = useMediaQuery("(max-width: 768px)"); // Example breakpoint
 
   const handleCopy = () => {
     navigator.clipboard.writeText(accountData.account_id);
@@ -22,7 +21,7 @@ export function AccountId({ accountData }: { accountData: AccountData }) {
   };
 
   return (
-    <Group gap={4}>
+    <Flex gap={4} direction={isSmallScreen ? "column" : "row"} align="center">
       <Text fw={300} size="xl" ml="2rem">
         <b>Near Account:</b>
       </Text>
@@ -36,6 +35,6 @@ export function AccountId({ accountData }: { accountData: AccountData }) {
           <IconClipboardCopy size={16} stroke={1.5} />
         )}
       </ActionIcon>
-    </Group>
+    </Flex>
   );
 }

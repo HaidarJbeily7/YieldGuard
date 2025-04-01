@@ -8,7 +8,6 @@ import axios from "axios";
 import { mockData } from "./mockData";
 import { Divider, Flex } from "@mantine/core";
 import { AccountId } from "./AccountId";
-
 import { WalletContext } from "../../../context/WalletContext";
 import { YourActivitiesSkeleton } from "./YourActivitiesSkeleton";
 
@@ -81,11 +80,19 @@ export function YourActivities() {
     <div style={{ padding: "1rem" }}>
       <AccountId accountData={accountData} />
       <Divider mt={16} size="xs" />
-      <Flex justify="space-between">
-        <AccountOverview accountData={accountData} />
+      <Flex 
+  justify="space-between" 
+  style={{ 
+    display: 'flex', 
+    alignItems: 'center', 
+    alignContent: 'space-around', 
+    flexWrap: 'wrap' 
+  }}
+>
+  <AccountOverview accountData={accountData} />
+  <TotalTransactions totalTx={totalTx} />
+</Flex>
 
-        <TotalTransactions totalTx={totalTx} />
-      </Flex>
       <DailyTransactionChart dailyTxCounts={dailyTxCounts} />
 
       <LatestTransactions transactions={transactions} />

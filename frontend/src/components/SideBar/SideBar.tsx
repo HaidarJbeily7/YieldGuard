@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useState, useContext } from "react";
+import { useState, useContext } from "react";
+import { WalletContext } from "../../context/WalletContext";
 import {
   IconAlertHexagon,
   IconFileAnalytics,
@@ -10,115 +11,90 @@ import {
   IconMessages,
   IconReceipt2,
   IconReceiptRefund,
-  // IconSettings,
   IconShoppingCart,
   IconSwitchHorizontal,
   IconUsers,
+  IconMenu2,
+  IconX,
 } from "@tabler/icons-react";
-import { Text, SegmentedControl, Divider } from "@mantine/core";
-import classes from "./SideBar.module.css";
-import { WalletContext } from "../../context/WalletContext";
-import { ForwardRefExoticComponent, RefAttributes } from "react";
-import { IconProps, Icon } from "@tabler/icons-react";
 
-const tabs: Record<
-  string,
-  {
-    link: string;
-    label: string;
-    icon: ForwardRefExoticComponent<IconProps & RefAttributes<Icon>>;
-  }[]
-> = {
+const tabs = {
   account: [
-    { link: "", label: "Your Activities", icon: IconFingerprint },
-    { link: "", label: "Report Activities", icon: IconAlertHexagon },
-    { link: "", label: "Check Activities", icon: IconShieldSearch },
-    { link: "", label: "Balances", icon: IconReceipt2 },
-    // { link: "", label: "Other Settings", icon: IconSettings },
+    { label: "Your Activities", icon: IconFingerprint },
+    { label: "Report Activities", icon: IconAlertHexagon },
+    { label: "Check Activities", icon: IconShieldSearch },
+    { label: "Balances", icon: IconReceipt2 },
   ],
   general: [
-    // To Be Used Later
-    { link: "", label: "Orders", icon: IconShoppingCart },
-    { link: "", label: "Receipts", icon: IconLicense },
-    { link: "", label: "Reviews", icon: IconMessage2 },
-    { link: "", label: "Messages", icon: IconMessages },
-    { link: "", label: "Customers", icon: IconUsers },
-    { link: "", label: "Refunds", icon: IconReceiptRefund },
-    { link: "", label: "Files", icon: IconFileAnalytics },
+    { label: "Orders", icon: IconShoppingCart },
+    { label: "Receipts", icon: IconLicense },
+    { label: "Reviews", icon: IconMessage2 },
+    { label: "Messages", icon: IconMessages },
+    { label: "Customers", icon: IconUsers },
+    { label: "Refunds", icon: IconReceiptRefund },
+    { label: "Files", icon: IconFileAnalytics },
   ],
 };
 
-interface SideBarProps {
-  activeTab: string;
-  setActiveTab: Dispatch<SetStateAction<string>>;
-}
-
-export function SideBar({ activeTab, setActiveTab }: SideBarProps) {
-  const [section, setSection] = useState<string>("account");
+export function SideBar({ activeTab, setActiveTab }) {
+  const [isOpen, setIsOpen] = useState(true);
   const { accountId, Logout } = useContext(WalletContext);
 
-  const handleDisconnect = () => {
-    Logout();
-  };
-
-  const links = tabs[section]?.map((item) => (
-    <a
-      className={classes.link}
-      data-active={item.label === activeTab || undefined}
-      href={item.link}
-      key={item.label}
-      onClick={(event) => {
-        event.preventDefault();
-        setActiveTab(item.label);
-      }}
-    >
-      <item.icon className={classes.linkIcon} stroke={1.5} />
-      <span>{item.label}</span>
-    </a>
-  ));
-
   return (
-    <nav className={classes.navbar}>
-      <div>
-        <Text
-          fw={500}
-          size="sm"
-          className={classes.title}
-          c="dimmed"
-          ta="center"
-          my={4}
-        >
-          @{accountId}
-        </Text>
+    <div className="relative">
+      <button
+        className="fixed top-4 left-4 z-50 bg-gray-800 p-2 rounded-md text-white lg:hidden"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {isOpen ? <IconX size={24} /> : <IconMenu2 size={24} />}
+      </button>
 
-        <Divider my="xs" />
+      <div
+        className={`fixed top-0 left-0 h-screen w-64 border-r border-gray-300 bg-[#09090b] text-white p-5 flex flex-col transition-transform duration-300 ease-in-out z-40 
+          ${isOpen ? "translate-x-0" : "-translate-x-full"} 
+          lg:translate-x-0 lg:relative lg:w-64 overflow-y-auto`}
+      >
+        <div className="text-center font-semibold text-lg mb-4">@{accountId}</div>
+        <hr className="border-gray-700 mb-4" />
 
-        <SegmentedControl
-          hidden={true}
-          value={section}
-          onChange={(value: string) => setSection(value)}
-          transitionTimingFunction="ease"
-          fullWidth
-          data={[
-            { label: "Account", value: "account" },
-            { label: "System", value: "general" },
-          ]}
-        />
+        <div className="flex flex-col gap-2 flex-grow">
+          {tabs.account.map((item) => (
+            <button
+              key={item.label}
+              className={`flex items-center gap-2 p-3 rounded-md transition-colors 
+                ${activeTab === item.label ? "bg-teal-600 text-white" : "hover:bg-gray-800"}`}
+              onClick={() => setActiveTab(item.label)}
+            >
+              <item.icon size={20} />
+              <span className={`${isOpen ? "block" : "hidden"} lg:block`}>{item.label}</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-auto">
+          <button
+            className="flex items-center gap-2 w-full p-3 rounded-md hover:bg-gray-800"
+            onClick={Logout}
+          >
+            <IconSwitchHorizontal size={20} />
+            <span className={`${isOpen ? "block" : "hidden"} lg:block`}>Change account</span>
+          </button>
+          <button
+            className="flex items-center gap-2 w-full p-3 rounded-md hover:bg-red-600"
+            onClick={Logout}
+          >
+            <IconLogout size={20} />
+            <span className={`${isOpen ? "block" : "hidden"} lg:block`}>Logout</span>
+          </button>
+        </div>
       </div>
 
-      <div className={classes.navbarMain}>{links}</div>
-
-      <div className={classes.footer}>
-        <a className={classes.link} onClick={handleDisconnect}>
-          <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
-          <span>Change account</span>
-        </a>
-
-        <a className={classes.link} onClick={handleDisconnect}>
-          <IconLogout className={classes.linkIcon} stroke={1.5} />
-          <span>Logout</span>
-        </a>
-      </div>
-    </nav>
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 lg:hidden"
+          onClick={() => setIsOpen(false)}
+        ></div>
+      )}
+    </div>
   );
 }
