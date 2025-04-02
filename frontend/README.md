@@ -20,6 +20,8 @@ The following pages have been modified to ensure better responsiveness. Tailwind
 - `DailyTransactionChart.tsx`
 - `AccountOverview.tsx`
 - `AccountId.tsx`
+- `ReportActivities.tsx`
+- `VoteCard.tsx`
 
 ---
 
