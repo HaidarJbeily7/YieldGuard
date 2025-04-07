@@ -3,14 +3,12 @@ import { Search } from "lucide-react";
 import { Button, Tabs, TabsList } from "@mantine/core";
 import { PerformanceChart } from "./PerformanceChart/PerformanceChart";
 import { chartdata } from "./PerformanceChart/PerformanceChartData";
-
-import { TabsContent, TabsTrigger } from "./ui/tabs";
 import { PositionsTable } from "./PositionsTable/PositionsTable";
 import { positions } from "./PositionsTable/PositionsTableData";
 import { ActivityTable } from "./ActivityTable/ActivityTable";
 import { activities } from "./ActivityTable/ActivityTableData";
 
-export default function CheckActivities() {
+export function CheckActivities() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
@@ -246,24 +244,24 @@ export default function CheckActivities() {
           <Tabs defaultValue="positions">
             <div className="border-b border-gray-900 px-4">
               <TabsList className="bg-transparent">
-                <TabsTrigger
+                <Tabs.Tab
                   value="positions"
                   className="data-[state=active]:border-b-2 data-[state=active]:border-teal-400 data-[state=active]:bg-transparent data-[state=active]:text-teal-400"
                 >
                   Active Positions
-                </TabsTrigger>
-                <TabsTrigger
+                </Tabs.Tab>
+                <Tabs.Tab
                   value="history"
                   className="data-[state=active]:border-b-2 data-[state=active]:border-teal-400 data-[state=active]:bg-transparent data-[state=active]:text-teal-400"
                 >
                   History
-                </TabsTrigger>
-                <TabsTrigger
+                </Tabs.Tab>
+                <Tabs.Tab
                   value="top"
                   className="data-[state=active]:border-b-2 data-[state=active]:border-teal-400 data-[state=active]:bg-transparent data-[state=active]:text-teal-400"
                 >
                   Top 100
-                </TabsTrigger>
+                </Tabs.Tab>
               </TabsList>
               <div className="ml-auto flex items-center space-x-4 py-2">
                 <div className="flex items-center space-x-2 text-sm text-gray-400">
@@ -314,35 +312,32 @@ export default function CheckActivities() {
               </div>
             </div>
 
-            <TabsContent value="positions" className="p-0">
+            <Tabs.Panel value="positions" className="p-0">
               <PositionsTable positions={positions} />
-            </TabsContent>
-            <TabsContent value="history" className="p-0">
+            </Tabs.Panel>
+            <Tabs.Panel value="history" className="p-0">
               <div className="p-4 text-center text-gray-400">
                 History will be displayed here
               </div>
-            </TabsContent>
-            <TabsContent value="top" className="p-0">
+            </Tabs.Panel>
+            <Tabs.Panel value="top" className="p-0">
               <div className="p-4 text-center text-gray-400">
                 Top 100 will be displayed here
               </div>
-            </TabsContent>
+            </Tabs.Panel>
           </Tabs>
           <div className="border-t border-gray-900">
             <Tabs defaultValue="activity">
               <div className="border-b border-gray-900 px-4">
                 <TabsList className="bg-transparent">
-                  <TabsTrigger
-                    value="activity"
-                    className="data-[state=active]:border-b-2 data-[state=active]:border-teal-400 data-[state=active]:bg-transparent data-[state=active]:text-teal-400"
-                  >
+                  <Tabs.List className="data-[state=active]:border-b-2 data-[state=active]:border-teal-400 data-[state=active]:bg-transparent data-[state=active]:text-teal-400">
                     Activity
-                  </TabsTrigger>
+                  </Tabs.List>
                 </TabsList>
               </div>
-              <TabsContent value="activity" className="p-0">
+              <Tabs.Panel value="activity" className="p-0">
                 <ActivityTable activities={activities} />
-              </TabsContent>
+              </Tabs.Panel>
             </Tabs>
           </div>
         </div>
