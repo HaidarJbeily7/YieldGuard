@@ -37,7 +37,7 @@ export const Content = () => {
         }}
         className="mb-3 text-center text-3xl font-bold leading-tight text-zinc-50 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight lg:text-8xl lg:leading-tight"
       >
-        Secure Your DeFi Journey with{" "}
+        Your AI-Powered Trading Companion{" "}
         <Text
           inherit
           span
@@ -63,8 +63,8 @@ export const Content = () => {
         }}
         className="mb-9 max-w-2xl text-center text-base text-zinc-400 sm:text-lg md:text-xl"
       >
-        Transform your DeFi experience with unparalleled security, insights, and
-        AI-powered strategies.
+        Understand your trading habits, analyze market trends, and make informed
+        decisions with Yield Guard AI.
       </motion.p>
       <motion.div
         initial={{
