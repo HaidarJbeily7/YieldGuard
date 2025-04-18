@@ -1,5 +1,6 @@
 import { MaxWidthWrapper } from "../utils/MaxWidthWrapper";
 import { motion } from "framer-motion";
+import { ConnectWalletButton } from "../ConnectWalletButton/ConnectWalletButton";
 
 export const CTA = () => {
   return (
@@ -34,9 +35,10 @@ export const CTA = () => {
             delay: 0.25,
             ease: "easeInOut",
           }}
-          className="mb-9 max-w-xl text-center text-3xl font-bold leading-tight text-zinc-50 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight"
+          className="mb-9  text-center text-3xl font-bold leading-tight text-zinc-50 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight"
         >
-          Don’t Risk It, Guard It!
+          Join traders boosting strategies with AI-powered insights!
+          <ConnectWalletButton size="md" className="mt-2" />
         </motion.h1>
       </MaxWidthWrapper>
       <div className="absolute inset-0 z-0 bg-grid-zinc-700/50" />
