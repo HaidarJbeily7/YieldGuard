@@ -1,5 +1,6 @@
 import { LineChart } from "@mantine/charts";
-import { Title, Text, Paper } from "@mantine/core";
+import { Title, Text, Paper} from "@mantine/core";
+import { useMediaQuery } from '@mantine/hooks';
 
 type DailyTransaction = {
   date: string;
@@ -39,17 +40,19 @@ export function DailyTransactionChart({
 }: {
   dailyTxCounts: DailyTransaction[];
 }) {
+  const isSmallScreen = useMediaQuery("(max-width: 600px)");
+
   if (!dailyTxCounts.length)
     return <Text>No data available for the chart.</Text>;
 
   return (
     <>
-      <Title mx="2rem" order={2}>
-        Transactions Activity
+      <Title mx="2rem" order={2} size={isSmallScreen ? "h4" : "h2"}>
+        Transactions Activitys
       </Title>
       <Paper m="2rem" px="1rem" py="3rem" bg="#121215" withBorder radius="lg">
         <LineChart
-          h={300}
+          h={isSmallScreen ? 200 : 300}
           data={dailyTxCounts.map((tx) => ({
             date: new Date(tx.date).toLocaleDateString(),
             Transactions: tx.count,

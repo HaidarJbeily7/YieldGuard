@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Grid, Title, Flex } from "@mantine/core";
+import { Title, Flex } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { ReportCard } from "./ReportCard";
 import { ReportInput } from "./ReportInput";
@@ -57,16 +57,16 @@ export function ReportActivities() {
         />
       </Flex>
       <Title mb="md">Opened Reports</Title>
-      <Grid>
-        {reports.map((report) => (
-          <Grid.Col span={4} key={report.id}>
-            <ReportCard
-              report={report}
-              onNavigate={(id) => navigate(`/report/${id}`)}
-            />
-          </Grid.Col>
-        ))}
-      </Grid>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 mb-6">
+  {reports.map((report) => (
+    <div className="mb-4 mx-3" key={report.id}>
+      <ReportCard
+        report={report}
+        onNavigate={(id) => navigate(`/report/${id}`)}
+      />
+    </div>
+  ))}
+</div>
     </div>
   );
 }

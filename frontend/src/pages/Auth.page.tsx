@@ -11,7 +11,12 @@ export function LoginPage() {
       direction="column"
       wrap="wrap"
     >
-      <Title order={1} mt="xl" mb="xl">
+      <Title
+        order={1}
+        mt="xl"
+        mb="xl"
+        fz={{ base: "18px", sm: "24px", md: "32px", lg: "36px" }} 
+      >
         Sign In with Your Near Wallet
       </Title>
       <Paper shadow="xs" p="xl">
