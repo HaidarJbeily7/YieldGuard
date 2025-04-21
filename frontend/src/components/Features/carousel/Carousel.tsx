@@ -161,36 +161,38 @@ const features: FeatureType[] = [
   {
     id: 1,
     Icon: FiArrowUp,
-    title: "Real-Time Yield Insights",
+    title: "Connect Your Wallet",
     description:
-      "Stay ahead with accurate, real-time APY tracking and detailed analytics across NEAR’s DeFi protocols like Ref Finance and Jumbo. Make data-driven decisions with confidence.",
+      "Securely link your crypto wallet to start receiving personalized insights.",
   },
   {
     id: 2,
+    Icon: FiBox,
+    title: "Analyze Your Trading Behavior",
+    description:
+      "Review your trading history to identify patterns and areas for improvement.",
+  },
+  {
+    id: 3,
+    Icon: FiPhone,
+    title: "Receive Personalized Alerts and Advice",
+    description:
+      "Stay informed with real-time alerts and AI-driven recommendations tailored to your trading style.",
+  },
+  {
+    id: 4,
     Icon: FiShield,
     title: "Unmatched Security Measures",
     description:
       "Protect your investments with advanced scam detection, wallet scoring, and protocol risk assessments powered by machine learning and a community-driven trust system.",
   },
   {
-    id: 3,
+    id: 5,
     Icon: FiUsers,
     title: "AI-Powered Recommendations",
     description:
       "Benefit from AI-driven strategies tailored to your investment profile, developed by a platform built on cutting-edge technology and expertise in DeFi ecosystems.",
   },
-  {
-    id: 4,
-    Icon: FiPhone,
-    title: "Always There for You",
-    description:
-      "Whether you're a beginner or an experienced investor, YieldGuard AI offers seamless support to ensure you get the most out of your DeFi journey.",
-  },
-  {
-    id: 5,
-    Icon: FiBox,
-    title: "Comprehensive DeFi Toolkit",
-    description:
-      "From yield optimization to wallet security and social trust systems, YieldGuard AI brings every tool you need into one powerful, easy-to-use platform.",
-  },
+
+
 ];

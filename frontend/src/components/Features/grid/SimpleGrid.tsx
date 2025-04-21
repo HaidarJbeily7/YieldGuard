@@ -12,33 +12,38 @@ export const SimpleGrid = () => (
   <div className="relative z-10 grid grid-cols-2 gap-9 px-3 md:grid-cols-3 md:gap-12 md:px-6">
     <Item
       Icon={FiCalendar}
-      title="Focus on Profitable Opportunities"
-      subtitle="Let YieldGuard AI handle the heavy lifting of tracking APYs, analyzing risks, and providing yield recommendations, so you can focus on making the best investment decisions."
+      title="Emotional Behavior Alerts"
+      subtitle="Receive notifications when you're about to make impulsive trades, helping you
+stay disciplined."
     />
     <Item
       Icon={FiWatch}
-      title="Automate Your Strategy"
-      subtitle="Say goodbye to manual monitoring and analysis—YieldGuard AI provides real-time insights and automated recommendations to save you time."
+      title="Regret Index"
+      subtitle="Analyze missed opportunities and understand the reasons behind them to
+improve future decisions."
     />
     <Item
       Icon={FiMoon}
-      title="Secure Your Investments"
-      subtitle="Sleep soundly knowing that YieldGuard AI’s scam detection, wallet analysis, and community-driven trust system protect your assets from malicious contracts and bad actors."
+      title="Smart Alerts"
+      subtitle="Get real-time insights when significant market movements occur, such as large
+trades by influential wallets."
     />
     <Item
       Icon={FiDollarSign}
-      title="Maximize Your Returns"
-      subtitle="Leverage AI-driven yield strategies and auto-compounding suggestions to make every dollar in your DeFi portfolio work harder."
+      title="Risk Profiling & Strategy Analysis"
+      subtitle="Assess your risk tolerance and receive tailored advice to optimize your trading
+strategies."
     />
     <Item
       Icon={FiCloud}
-      title="Seamless Protocol Integration"
-      subtitle="Effortlessly connect to NEAR’s top DeFi platforms, like Ref Finance and Jumbo, for an all-in-one yield optimization and security experience."
+      title="AI Chat Assistant"
+      subtitle="Discuss your trading ideas with an AI that provides data-driven feedback and
+suggestions."
     />
     <Item
       Icon={FiCheck}
       title="All-in-One Platform"
-      subtitle="From yield tracking to wallet scoring and risk assessment, YieldGuard AI provides a comprehensive suite of tools for safe and profitable DeFi investments."
+      subtitle="YieldGuard AI offers tools for yield tracking, wallet scoring, and risk assessment—empowering safer, more profitable DeFi investing."
     />
   </div>
 );
