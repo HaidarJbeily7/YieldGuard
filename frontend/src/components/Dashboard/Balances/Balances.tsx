@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Skeleton } from "@mantine/core";
 import { balanceData } from "./BalaceData";
 import Token3D from "./Token3D";
+import { CommandBar } from "../AIAssistantBar/CommandBar";
+
 
 export function Balances() {
   const [balances, setBalances] = useState<typeof balanceData>();
@@ -13,6 +15,7 @@ export function Balances() {
   }, []);
 
   return (
+    <div>
     <div className="flex flex-col items-center p-6">
       <h2 className="text-2xl font-bold text-white mb-4">Your Balances</h2>
 
@@ -42,6 +45,10 @@ export function Balances() {
               <Skeleton key={i} height={80} className="w-full rounded-lg" />
             ))}
       </div>
+     
+
+    </div>
+    <CommandBar  />
     </div>
   );
 }
