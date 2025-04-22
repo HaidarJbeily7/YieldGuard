@@ -10,6 +10,7 @@ import { Divider, Flex } from "@mantine/core";
 import { AccountId } from "./AccountId";
 import { WalletContext } from "../../../context/WalletContext";
 import { YourActivitiesSkeleton } from "./YourActivitiesSkeleton";
+import { CommandBar } from "../AIAssistantBar/CommandBar";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -42,11 +43,11 @@ export function YourActivities() {
   const { data, error } = useSWR(
     accountId
       ? [
-          `https://api.pikespeak.ai/account/accounts-parents?accounts=${accountId}`,
-          `https://api.pikespeak.ai/account/transactions/${accountId}?limit=10`,
-          `https://api.pikespeak.ai/account/daily-tx-count/${accountId}`,
-          `https://api.pikespeak.ai/account/tx-count/${accountId}`,
-        ]
+        `https://api.pikespeak.ai/account/accounts-parents?accounts=${accountId}`,
+        `https://api.pikespeak.ai/account/transactions/${accountId}?limit=10`,
+        `https://api.pikespeak.ai/account/daily-tx-count/${accountId}`,
+        `https://api.pikespeak.ai/account/tx-count/${accountId}`,
+      ]
       : null,
     async (urls) => {
       const [accountData, transactions, dailyTxCounts, totalTx] =
@@ -80,22 +81,25 @@ export function YourActivities() {
     <div style={{ padding: "1rem" }}>
       <AccountId accountData={accountData} />
       <Divider mt={16} size="xs" />
-      <Flex 
-  justify="space-between" 
-  style={{ 
-    display: 'flex', 
-    alignItems: 'center', 
-    alignContent: 'space-around', 
-    flexWrap: 'wrap' 
-  }}
->
-  <AccountOverview accountData={accountData} />
-  <TotalTransactions totalTx={totalTx} />
-</Flex>
+      <Flex
+        justify="space-between"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          alignContent: 'space-around',
+          flexWrap: 'wrap'
+        }}
+      >
+        <AccountOverview accountData={accountData} />
+        <TotalTransactions totalTx={totalTx} />
+      </Flex>
 
       <DailyTransactionChart dailyTxCounts={dailyTxCounts} />
 
       <LatestTransactions transactions={transactions} />
+     
+      <CommandBar />
+
     </div>
   );
 }

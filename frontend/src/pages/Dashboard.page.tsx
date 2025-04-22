@@ -5,6 +5,8 @@ import { CheckActivities } from "../components/Dashboard/CheckActivities/CheckAc
 import { OtherSettings } from "../components/Dashboard/OtherSettings/OtherSettings";
 import { ReportActivities } from "../components/Dashboard/ReportActivities/ReportActivities";
 import { YourActivities } from "../components/Dashboard/YourActivities/YourActivities";
+import FeaturesSection from "../components/Dashboard/Feature/FeaturesSection";
+import Dashboard from "../components/Dashboard/Performance/DashboardStats";
 import { SideBar } from "../components/SideBar/SideBar";
 import { IconMenu2 } from "@tabler/icons-react";
 
@@ -12,6 +14,8 @@ const tabComponents: Record<string, React.FC> = {
   "Your Activities": YourActivities,
   "Report Activities": ReportActivities,
   "Check Activities": CheckActivities,
+  "Features Section": FeaturesSection,
+  "Performance":  Dashboard,
   Balances: Balances,
   "Other Settings": OtherSettings,
 };
@@ -45,7 +49,8 @@ export function DashboardPage() {
         <IconMenu2 size={24} />
       </button>
 
-      <div className="flex-1 overflow-y-auto px-6 pt-6 ">
+    
+      <div className="flex-1 overflow-y-auto px-6 pt-6">
         <ActiveComponent />
       </div>
     </div>

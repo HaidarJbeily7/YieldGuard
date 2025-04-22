@@ -5,6 +5,8 @@ import { ReportCard } from "./ReportCard";
 import { ReportInput } from "./ReportInput";
 import { ReportButton } from "./ReportButton";
 import { reportsData } from "./ReportsData";
+import { CommandBar } from "../AIAssistantBar/CommandBar";
+
 
 export function ReportActivities() {
   const [reports, setReports] = useState(reportsData);
@@ -58,15 +60,17 @@ export function ReportActivities() {
       </Flex>
       <Title mb="md">Opened Reports</Title>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 mb-6">
-  {reports.map((report) => (
-    <div className="mb-4 mx-3" key={report.id}>
-      <ReportCard
-        report={report}
-        onNavigate={(id) => navigate(`/report/${id}`)}
-      />
-    </div>
-  ))}
-</div>
+        {reports.map((report) => (
+          <div className="mb-4 mx-3" key={report.id}>
+            <ReportCard
+              report={report}
+              onNavigate={(id) => navigate(`/report/${id}`)}
+            />
+          </div>
+        ))}
+      </div>
+  
+      <CommandBar />
     </div>
   );
 }

@@ -24,6 +24,8 @@ const tabs = {
     { label: "Report Activities", icon: IconAlertHexagon },
     { label: "Check Activities", icon: IconShieldSearch },
     { label: "Balances", icon: IconReceipt2 },
+    { label: "Features Section", icon: IconFileAnalytics }, 
+    { label: "Performance", icon: IconFileAnalytics }, 
   ],
   general: [
     { label: "Orders", icon: IconShoppingCart },
@@ -42,7 +44,6 @@ interface SideBarProps {
 }
 
 export function SideBar({ activeTab, setActiveTab }: SideBarProps) {
-
   const [isOpen, setIsOpen] = useState(true);
   const { accountId, Logout } = useContext(WalletContext);
 
@@ -72,7 +73,9 @@ export function SideBar({ activeTab, setActiveTab }: SideBarProps) {
               onClick={() => setActiveTab(item.label)}
             >
               <item.icon size={20} />
-              <span className={`${isOpen ? "block" : "hidden"} lg:block`}>{item.label}</span>
+              <span className={`${isOpen ? "block" : "hidden"} lg:block`}>
+                {item.label}
+              </span>
             </button>
           ))}
         </div>
@@ -83,14 +86,18 @@ export function SideBar({ activeTab, setActiveTab }: SideBarProps) {
             onClick={Logout}
           >
             <IconSwitchHorizontal size={20} />
-            <span className={`${isOpen ? "block" : "hidden"} lg:block`}>Change account</span>
+            <span className={`${isOpen ? "block" : "hidden"} lg:block`}>
+              Change account
+            </span>
           </button>
           <button
             className="flex items-center gap-2 w-full p-3 rounded-md hover:bg-red-600"
             onClick={Logout}
           >
             <IconLogout size={20} />
-            <span className={`${isOpen ? "block" : "hidden"} lg:block`}>Logout</span>
+            <span className={`${isOpen ? "block" : "hidden"} lg:block`}>
+              Logout
+            </span>
           </button>
         </div>
       </div>
