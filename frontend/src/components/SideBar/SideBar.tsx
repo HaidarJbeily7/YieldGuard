@@ -48,7 +48,7 @@ export function SideBar({ activeTab, setActiveTab }: SideBarProps) {
   const { accountId, Logout } = useContext(WalletContext);
 
   return (
-    <div className="relative">
+    <div className="relative ">
       <button
         className="fixed top-4 left-4 z-50 bg-gray-800 p-2 rounded-md text-white lg:hidden"
         onClick={() => setIsOpen(!isOpen)}
@@ -80,7 +80,7 @@ export function SideBar({ activeTab, setActiveTab }: SideBarProps) {
           ))}
         </div>
 
-        <div className="mt-auto">
+        <div className="mt-auto z-[11000]">
           <button
             className="flex items-center gap-2 w-full p-3 rounded-md hover:bg-gray-800"
             onClick={Logout}

@@ -10,7 +10,6 @@ import { Divider, Flex } from "@mantine/core";
 import { AccountId } from "./AccountId";
 import { WalletContext } from "../../../context/WalletContext";
 import { YourActivitiesSkeleton } from "./YourActivitiesSkeleton";
-import { CommandBar } from "../AIAssistantBar/CommandBar";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -98,7 +97,7 @@ export function YourActivities() {
 
       <LatestTransactions transactions={transactions} />
      
-      <CommandBar />
+  
 
     </div>
   );

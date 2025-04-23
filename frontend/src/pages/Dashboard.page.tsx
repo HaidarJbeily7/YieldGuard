@@ -6,7 +6,7 @@ import { OtherSettings } from "../components/Dashboard/OtherSettings/OtherSettin
 import { ReportActivities } from "../components/Dashboard/ReportActivities/ReportActivities";
 import { YourActivities } from "../components/Dashboard/YourActivities/YourActivities";
 import FeaturesSection from "../components/Dashboard/Feature/FeaturesSection";
-import Dashboard from "../components/Dashboard/Performance/DashboardStats";
+import {Dashboard} from "../components/Dashboard/Performance/Dashboard";
 import { SideBar } from "../components/SideBar/SideBar";
 import { IconMenu2 } from "@tabler/icons-react";
 
