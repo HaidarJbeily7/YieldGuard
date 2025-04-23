@@ -1,4 +1,3 @@
-import React from "react";
 import { FiTrendingDown, FiTrendingUp } from "react-icons/fi";
 import { statCardsData } from "./statCardsData";
 
