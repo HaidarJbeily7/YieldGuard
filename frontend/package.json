@@ -21,6 +21,7 @@
     "@tabler/icons-react": "^3.26.0",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.9",
+    "dayjs": "^1.11.13",
     "framer-motion": "^11.18.0",
     "lucide-react": "^0.469.0",
     "mini-svg-data-uri": "^1.4.4",
