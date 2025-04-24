@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { Balances } from "../components/Dashboard/Balances/Balances";
 import { CheckActivities } from "../components/Dashboard/CheckActivities/CheckActivities";
 import { OtherSettings } from "../components/Dashboard/OtherSettings/OtherSettings";
-import { ReportActivities } from "../components/Dashboard/ReportActivities/ReportActivities";
+// import { ReportActivities } from "../components/Dashboard/ReportActivities/ReportActivities";
 import { YourActivities } from "../components/Dashboard/YourActivities/YourActivities";
 import FeaturesSection from "../components/Dashboard/Feature/FeaturesSection";
 import {Dashboard} from "../components/Dashboard/Performance/Dashboard";
@@ -12,7 +12,7 @@ import { IconMenu2 } from "@tabler/icons-react";
 
 const tabComponents: Record<string, React.FC> = {
   "Your Activities": YourActivities,
-  "Report Activities": ReportActivities,
+  // "Report Activities": ReportActivities,
   "Check Activities": CheckActivities,
   "Features Section": FeaturesSection,
   "Performance":  Dashboard,

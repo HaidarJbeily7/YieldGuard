@@ -21,7 +21,7 @@ import {
 const tabs = {
   account: [
     { label: "Your Activities", icon: IconFingerprint },
-    { label: "Report Activities", icon: IconAlertHexagon },
+    // { label: "Report Activities", icon: IconAlertHexagon },
     { label: "Check Activities", icon: IconShieldSearch },
     { label: "Balances", icon: IconReceipt2 },
     { label: "Features Section", icon: IconFileAnalytics }, 
