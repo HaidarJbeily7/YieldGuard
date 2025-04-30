@@ -2,7 +2,7 @@ name: CI Backend
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, 52-create-ci-for-backend-and-frontend]
     paths:
       - 'backend/**'
   pull_request:
