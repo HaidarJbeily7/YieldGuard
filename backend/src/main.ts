@@ -8,6 +8,7 @@ import * as compression from 'compression';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  
   const config = new DocumentBuilder()
     .setTitle('YieldGaurd API')
     .setDescription('API description')
