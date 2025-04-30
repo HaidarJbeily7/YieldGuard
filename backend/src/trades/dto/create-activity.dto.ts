@@ -3,7 +3,7 @@ import { IsString, IsNumber, IsObject, IsNotEmpty } from 'class-validator';
 export class CreateActivityDto {
   @IsString()
   @IsNotEmpty()
-  platform: string;
+  platform: string | undefined;
 
   @IsNumber()
   @IsNotEmpty()
