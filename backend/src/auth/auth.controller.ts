@@ -21,7 +21,7 @@ export class AuthController {
     console.log('googleAuthCallback');
 
     // console.log(req.user);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const token = await this.authService.signIn(req.user);
     // console.log(token);
     res.cookie('access_token', token, {

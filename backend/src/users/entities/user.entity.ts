@@ -31,6 +31,6 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany(() => Activity, activity => activity.user)
+  @OneToMany(() => Activity, (activity) => activity.user)
   activities: Activity[];
 }
