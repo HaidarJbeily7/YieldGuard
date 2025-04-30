@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TradesModule } from './trades/trades.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    TradesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
