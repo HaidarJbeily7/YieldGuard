@@ -12,7 +12,10 @@ export class TradesService {
     private activityRepository: Repository<Activity>,
   ) {}
 
-  async create(createActivityDto: CreateActivityDto, userId: number): Promise<Activity> {
+  async create(
+    createActivityDto: CreateActivityDto,
+    userId: number,
+  ): Promise<Activity> {
     const activity = this.activityRepository.create({
       ...createActivityDto,
       user: { id: userId },
@@ -27,12 +30,20 @@ export class TradesService {
   }
 
   async findOne(id: number, userId: number): Promise<Activity> {
-    return this.activityRepository.findOne({
+    const activity = await this.activityRepository.findOne({
       where: { id, user: { id: userId } },
     });
+    if (!activity) {
+      throw new Error('Activity not found');
+    }
+    return activity;
   }
 
-  async update(id: number, updateActivityDto: UpdateActivityDto, userId: number): Promise<Activity> {
+  async update(
+    id: number,
+    updateActivityDto: UpdateActivityDto,
+    userId: number,
+  ): Promise<Activity> {
     await this.activityRepository.update(
       { id, user: { id: userId } },
       updateActivityDto,

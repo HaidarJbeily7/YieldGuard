@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
 import { TradesService } from './trades.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
@@ -16,7 +26,10 @@ export class TradesController {
   constructor(private readonly tradesService: TradesService) {}
 
   @Post()
-  create(@Body() createActivityDto: CreateActivityDto, @Req() req: RequestWithUser) {
+  create(
+    @Body() createActivityDto: CreateActivityDto,
+    @Req() req: RequestWithUser,
+  ) {
     return this.tradesService.create(createActivityDto, req.user.id);
   }
 

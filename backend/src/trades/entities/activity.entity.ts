@@ -18,6 +18,6 @@ export class Activity {
   @Column('jsonb')
   metadata: Record<string, any>;
 
-  @ManyToOne(() => User, user => user.activities)
+  @ManyToOne(() => User, (user) => user.activities)
   user: User;
-} 
+}

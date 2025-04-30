@@ -16,4 +16,4 @@ export class CreateActivityDto {
   @IsObject()
   @IsNotEmpty()
   metadata: Record<string, any>;
-} 
+}
