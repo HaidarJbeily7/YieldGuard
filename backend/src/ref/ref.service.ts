@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
-import { getRefPools, Pool, getDCLPool } from '@ref-finance/ref-sdk';
+import { Pool, fetchAllPools } from '@ref-finance/ref-sdk';
 import { Cache } from '@nestjs/cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject } from '@nestjs/common';
@@ -23,8 +23,8 @@ export class RefService implements OnModuleInit {
 
   private async updatePoolsCache(): Promise<void> {
     try {
-      const pools = await getRefPools(1, 1000);
-      const 
+      const { ratedPools, unRatedPools, simplePools } = await fetchAllPools();
+      const pools = [...ratedPools, ...unRatedPools, ...simplePools];
       await this.cacheManager.set(
         this.CACHE_KEY_POOLS,
         pools,
