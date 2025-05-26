@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "@ref-finance/ref-sdk": "^1.4.6",
+    "@ref-finance/ref-sdk": "^1.4.7",
     "express": "^4.21.2",
-    "react": "^19.0.0"
+    "react": "^19.1.0"
   }
 }
