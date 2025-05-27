@@ -14,7 +14,7 @@ async function bootstrap() {
     .setDescription('API description')
     .setVersion('1.0')
     .addTag('API')
-    .addServer('http://localhost:3000/')
+    .addServer('https://backend-patient-thunder-8746.fly.dev/') // Make it localhost if needed
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, documentFactory);
