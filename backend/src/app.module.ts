@@ -7,6 +7,7 @@ import { PassportModule } from '@nestjs/passport';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TradesModule } from './trades/trades.module';
+import { RefModule } from './ref/ref.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { TradesModule } from './trades/trades.module';
       synchronize: true,
     }),
     TradesModule,
+    RefModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs/cache-manager": "^3.0.1",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
@@ -28,7 +29,9 @@
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.1.6",
     "@nestjs/typeorm": "^11.0.0",
+    "@ref-finance/ref-sdk": "^1.4.6",
     "@scalar/nestjs-api-reference": "^0.4.12",
+    "cache-manager": "^6.4.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "compression": "^1.8.0",
@@ -37,6 +40,7 @@
     "passport-google-oauth2": "^0.2.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.15.6",
+    "react": "^19.1.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.22",
