@@ -108,8 +108,14 @@ const watchlist = [
 ];
 
 export default function DashboardPage() {
-  const { signedAccountId } = useWallet();
+  const { signedAccountId, wallet } = useWallet();
 
+
+  const handleLogin = async () => {
+    if (wallet) {
+      await wallet.signIn();
+    }
+  };
   if (!signedAccountId) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -121,8 +127,8 @@ export default function DashboardPage() {
           <p className="text-muted-foreground mb-6">
             Please connect your wallet to access your trading dashboard.
           </p>
-          <Button asChild className="bg-primary hover:bg-primary/90">
-            <a href="/login">Connect Wallet</a>
+          <Button  className="bg-primary hover:bg-primary/90" onClick={handleLogin}>
+            Connect Wallet
           </Button>
         </div>
       </div>

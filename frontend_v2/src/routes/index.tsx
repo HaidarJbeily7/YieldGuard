@@ -14,28 +14,28 @@ export const Route = createFileRoute("/")({
 // Mock data for additional sections
 const testimonials = [
   {
-    name: "Alex Chen",
-    role: "Professional Trader",
-    company: "Quantum Capital",
-    avatar: "AC",
+    name: "CiCicharts",
+    role: "Memecoin Trader",
+    company: "@CiCicharts",
+    avatar: "CC",
     rating: 5,
-    content: "Yield Guard has revolutionized my trading workflow. The analytics are incredibly accurate and the execution speed is unmatched."
+    content: "Finally a trading platform that doesn't eat me alive with gas fees 😅 NEAR's like 0.001 per tx vs the $50+ I was paying on ETH. Actually profitable to swing trade now!"
   },
   {
-    name: "Sarah Williams",
-    role: "Portfolio Manager",
-    company: "Digital Assets Fund",
-    avatar: "SW",
+    name: "LJC", 
+    role: "Crypto Trader",
+    company: "@OnlyLJC", 
+    avatar: "LJ",
     rating: 5,
-    content: "The risk management tools and real-time monitoring have saved me from significant losses. This platform is a game-changer."
+    content: "The 1-3 sec transaction times are *chef's kiss* 👌 No more waiting 10 mins wondering if my trade went through. NEAR ecosystem is underrated fr"
   },
   {
-    name: "Michael Torres",
-    role: "Crypto Strategist",
-    company: "BlockTrade",
-    avatar: "MT",
-    rating: 5,
-    content: "Best trading platform I've used. The security features give me peace of mind, and the interface is incredibly intuitive."
+    name: "CallMaster3k",
+    role: "DeFi Trader",
+    company: "@callmaster3k",
+    avatar: "CM", 
+    rating: 4,
+    content: "Love that I can connect my NEAR wallet directly. Interface is clean and doesn't overwhelm me with 100 indicators I don't understand. Perfect for someone who's not a trading pro"
   }
 ];
 
@@ -48,20 +48,24 @@ const stats = [
 
 const faqs = [
   {
-    question: "How secure is Yield Guard?",
-    answer: "We use bank-grade security with multi-layer encryption, cold storage for funds, and comprehensive insurance coverage. All transactions are protected by advanced security protocols."
+    question: "What cryptocurrencies can I trade on NEAR Protocol?",
+    answer: "You can trade NEAR tokens, Aurora ecosystem tokens (ETH, USDC, USDT), and various NEP-141 tokens native to NEAR. We also support cross-chain bridged assets from Ethereum and other networks through Rainbow Bridge integration."
   },
   {
-    question: "What are the trading fees?",
-    answer: "We offer competitive fees starting at 0.1% for makers and 0.2% for takers, with volume discounts available. No hidden fees or surprise charges."
+    question: "How do gas fees work for trading on NEAR?",
+    answer: "NEAR transactions cost approximately 0.0001-0.001 NEAR per transaction (~$0.0001-0.001), making it extremely cost-effective. Gas fees are predictable and much lower than Ethereum, enabling frequent trading without prohibitive costs."
   },
   {
-    question: "Is there a minimum deposit?",
-    answer: "No minimum deposit required. Start trading with any amount that suits your strategy and risk tolerance."
+    question: "Is my NEAR wallet compatible with Yield Guard?",
+    answer: "Yes! We support all major NEAR wallets including NEAR Wallet, MyNearWallet, HERE Wallet, Meteor Wallet, and hardware wallets like Ledger. We also support Ethereum wallets through Aurora integration."
   },
   {
-    question: "Do you offer mobile trading?",
-    answer: "Yes, our platform is fully responsive and optimized for mobile devices. We also have dedicated mobile apps coming soon."
+    question: "How fast are transactions on NEAR Protocol?",
+    answer: "NEAR processes transactions in 1-3 seconds with finality. This enables near-instant trading execution, real-time portfolio updates, and seamless user experience compared to slower blockchain networks."
+  },
+  {
+    question: "What about cross-chain trading?",
+    answer: "Through Aurora and Rainbow Bridge, you can seamlessly trade between NEAR and Ethereum ecosystems. Bridge assets, trade Aurora-based tokens, and access the full DeFi ecosystem with low fees and fast execution."
   }
 ];
 
@@ -359,7 +363,17 @@ export default function HomePage() {
                   </div>
                   <div>
                     <div className="font-semibold text-foreground">{testimonial.name}</div>
-                    <div className="text-sm text-muted-foreground">{testimonial.role} at {testimonial.company}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {testimonial.role} • 
+                      <a 
+                        href={`https://twitter.com/${testimonial.company.replace('@', '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:text-primary/80 transition-colors ml-1"
+                      >
+                        {testimonial.company}
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
