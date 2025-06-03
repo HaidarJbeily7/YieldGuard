@@ -36,9 +36,9 @@ export default function GuestbookSigner() {
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-md">
       <fieldset id="fieldset" className="space-y-4">
-        <h2 className="text-2xl font-bold">Guest Book</h2>
+        <h2 className="text-2xl font-bold">Messages</h2>
         <p className="text-opacity-70">
-          Sign the guest book, {signedAccountId}!
+          Signed as {signedAccountId}!
         </p>
         <div>
           <label htmlFor="message" className="mb-1 block text-sm font-medium">
@@ -72,7 +72,7 @@ export default function GuestbookSigner() {
           </div>
         </div>
         <Button type="submit" className="w-full transition-all focus:scale-95">
-          Sign Guest Book
+          Sign
         </Button>
       </fieldset>
     </form>

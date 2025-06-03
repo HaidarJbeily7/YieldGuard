@@ -24,7 +24,7 @@ export default function Messages() {
           ))
         ) : (
           <p className="text-center text-opacity-70">
-            No data yet. Be the first to sign the guestbook!
+            No data yet. Be the first to sign!
           </p>
         )}
       </div>

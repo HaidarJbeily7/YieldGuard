@@ -30,9 +30,9 @@ export default function LoginPage() {
       <div className="w-full max-w-2xl py-12">
         <Button
           onClick={handleSignIn}
-          className="w-full bg-blue-600 text-white transition-all hover:bg-blue-700 focus:scale-95"
+          className="w-full text-white transition-all"
         >
-          Sign In
+          Connect NEAR Account
         </Button>
       </div>
     </div>

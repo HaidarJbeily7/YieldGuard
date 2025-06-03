@@ -12,8 +12,7 @@ export interface GuestBookMessage {
 }
 
 export const GUESTBOOK_CONTRACT = {
-  mainnet: "hello.near-examples.near",
-  testnet: "guestbook.near-examples.testnet"
+  mainnet: "haidarjbeily.near",
 };
 
 export function useGuestBookMessages() {
@@ -23,13 +22,13 @@ export function useGuestBookMessages() {
     queryKey: ["guestbook-messages"],
     queryFn: async () => {
       const totalMessages = await view<number>({
-        account: GUESTBOOK_CONTRACT[networkId],
+        account: GUESTBOOK_CONTRACT[networkId as "mainnet"],
         method: "total_messages",
         deps: { rpcProvider: getProviderByNetwork(networkId) }
       });
       const fromIndex = totalMessages >= 10 ? totalMessages - 10 : 0;
       const lastMessages = await view<GuestBookMessage[]>({
-        account: GUESTBOOK_CONTRACT[networkId],
+        account: GUESTBOOK_CONTRACT[networkId as "mainnet"],
         method: "get_messages",
         args: { from_index: String(fromIndex), limit: "10" },
         deps: { rpcProvider: getProviderByNetwork(networkId) }
@@ -58,13 +57,13 @@ export function useWriteMessage() {
         const deposit = parseNearAmount(donationAmount);
 
         const result = wallet?.signAndSendTransaction({
-          contractId: GUESTBOOK_CONTRACT[networkId],
+          contractId: GUESTBOOK_CONTRACT[networkId as "mainnet"],
           actions: [
             {
               type: "FunctionCall",
               params: {
-                methodName: "add_message",
-                args: { text: message },
+                methodName: "request_whitelist",
+                args: { account_id: message },
                 gas: THIRTY_TGAS,
                 deposit: deposit ? deposit : NO_DEPOSIT
               }

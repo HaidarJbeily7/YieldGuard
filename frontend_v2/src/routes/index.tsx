@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useWallet } from "@/contexts/near";
-import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, BarChart3, Shield, Zap, TrendingUp, DollarSign, Activity, Sparkles, Globe, Lock, Star, Users, CheckCircle, Quote, Mail, Phone, MapPin, Github, Twitter, Linkedin, ChevronDown } from "lucide-react";
+import { useWriteMessage } from "@/lib/guestbook";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { ArrowRight, BarChart3, Shield, Zap, TrendingUp, DollarSign, Activity, Sparkles, Globe, Lock, Star, Users, CheckCircle, Quote, Mail, Phone, MapPin, Github, Twitter, Linkedin, ChevronDown, LogIn } from "lucide-react";
+import { useState } from "react";
 
 export const Route = createFileRoute("/")({
   component: HomePage
@@ -62,11 +66,37 @@ const faqs = [
 ];
 
 export default function HomePage() {
-  const { signedAccountId } = useWallet();
+  const { signedAccountId, wallet } = useWallet();
+  const { mutateAsync, isPending } = useWriteMessage();
+  const navigate = useNavigate();
+  const [showDonationDialog, setShowDonationDialog] = useState(false);
+  const [donationAmount, setDonationAmount] = useState("");
+
+  const handleLogin = async () => {
+    if (wallet) {
+      await wallet.signIn();
+    }
+  };
 
   const handleWhitelistClick = () => {
-    // TODO: Implement whitelist functionality
-    console.log("Whitelist account clicked");
+    if (signedAccountId) {
+      setShowDonationDialog(true);
+    }
+  };
+
+  const handleDonationSubmit = async () => {
+    if (signedAccountId) {
+      try {
+        await mutateAsync({
+          message: signedAccountId,
+          donationAmount: donationAmount || "0"
+        });
+        setShowDonationDialog(false);
+        setDonationAmount("");
+      } catch (error) {
+        console.error("Error submitting whitelist request:", error);
+      }
+    }
   };
 
   return (
@@ -111,20 +141,34 @@ export default function HomePage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-              <Button 
-                size="lg" 
-                onClick={handleWhitelistClick}
-                className="group bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-6 text-xl font-semibold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:-translate-y-1 border border-primary/20"
-              >
-                <Sparkles className="mr-2 h-5 w-5 group-hover:animate-pulse" />
-                WhiteList My Account
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              {!signedAccountId ? (
+                <Button 
+                  size="lg" 
+                  onClick={handleLogin}
+                  className="group bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-6 text-xl font-semibold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:-translate-y-1 border border-primary/20"
+                >
+                  <LogIn className="mr-2 h-5 w-5 group-hover:animate-pulse" />
+                  Connect Wallet
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              ) : (
+                <Button 
+                  size="lg" 
+                  onClick={handleWhitelistClick}
+                  disabled={isPending}
+                  className="group bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-6 text-xl font-semibold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:-translate-y-1 border border-primary/20"
+                >
+                  <Sparkles className="mr-2 h-5 w-5 group-hover:animate-pulse" />
+                  {isPending ? "Processing..." : "WhiteList My Account"}
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              )}
               
               <Button 
                 variant="outline" 
                 size="lg"
                 className="px-10 py-6 text-xl border-2 border-border/50 hover:border-primary/50 bg-background/50 backdrop-blur-sm hover:bg-primary/5 transition-all duration-300"
+              onClick={() => navigate({ to: "/markets" })}
               >
                 <Globe className="mr-2 h-5 w-5" />
                 Explore Markets
@@ -370,15 +414,28 @@ export default function HomePage() {
             Join our exclusive whitelist and be among the first to experience the future of professional trading.
           </p>
           
-          <Button 
-            size="lg" 
-            onClick={handleWhitelistClick}
-            className="group bg-primary hover:bg-primary/90 text-primary-foreground px-16 py-8 text-2xl font-semibold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:-translate-y-2 border border-primary/20 mb-12"
-          >
-            <Sparkles className="mr-3 h-6 w-6 group-hover:animate-pulse" />
-            WhiteList My Account Now
-            <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          {!signedAccountId ? (
+            <Button 
+              size="lg" 
+              onClick={handleLogin}
+              className="group bg-primary hover:bg-primary/90 text-primary-foreground px-16 py-8 text-2xl font-semibold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:-translate-y-2 border border-primary/20 mb-12"
+            >
+              <LogIn className="mr-3 h-6 w-6 group-hover:animate-pulse" />
+              Connect Wallet to Get Started
+              <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          ) : (
+            <Button 
+              size="lg" 
+              onClick={handleWhitelistClick}
+              disabled={isPending}
+              className="group bg-primary hover:bg-primary/90 text-primary-foreground px-16 py-8 text-2xl font-semibold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:-translate-y-2 border border-primary/20 mb-12"
+            >
+              <Sparkles className="mr-3 h-6 w-6 group-hover:animate-pulse" />
+              {isPending ? "Processing..." : "WhiteList My Account Now"}
+              <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          )}
           
           <div className="flex flex-wrap items-center justify-center gap-8 text-muted-foreground">
             <div className="flex items-center space-x-2">
@@ -492,6 +549,77 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      {/* Donation Dialog */}
+      <Dialog open={showDonationDialog} onOpenChange={setShowDonationDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center space-x-2">
+              <Sparkles className="h-5 w-5 text-primary" />
+              <span>Join the Whitelist</span>
+            </DialogTitle>
+            <DialogDescription>
+              You're about to join our exclusive whitelist! You can optionally support the platform with a donation in NEAR tokens.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <label htmlFor="donation" className="text-sm font-medium">
+                Donation Amount (NEAR) - Optional
+              </label>
+              <Input
+                id="donation"
+                type="number"
+                placeholder="0.0"
+                step="0.1"
+                min="0"
+                value={donationAmount}
+                onChange={(e) => setDonationAmount(e.target.value)}
+                className="text-center"
+              />
+              <p className="text-xs text-muted-foreground text-center">
+                Leave empty or enter 0 for no donation
+              </p>
+            </div>
+            
+            <div className="bg-primary/5 p-4 rounded-lg border border-primary/20">
+              <div className="flex items-center space-x-2 mb-2">
+                <Shield className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium text-primary">Account to Whitelist:</span>
+              </div>
+              <p className="text-sm text-muted-foreground break-all">{signedAccountId}</p>
+            </div>
+          </div>
+          
+          <DialogFooter>
+            <Button 
+              variant="outline" 
+              onClick={() => setShowDonationDialog(false)}
+              disabled={isPending}
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleDonationSubmit}
+              disabled={isPending}
+              className="bg-primary hover:bg-primary/90"
+            >
+              {isPending ? (
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin"></div>
+                  <span>Processing...</span>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-2">
+                  <Sparkles className="h-4 w-4" />
+                  <span>Submit Request</span>
+                </div>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
