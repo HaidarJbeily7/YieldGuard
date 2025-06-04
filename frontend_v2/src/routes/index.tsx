@@ -124,7 +124,7 @@ export default function HomePage() {
                   <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-primary/90 to-primary/70 bg-clip-text text-transparent">
                     Yield Guard
                   </h1>
-                  <div className="absolute -top-2 -right-8 text-xs bg-primary/10 text-primary px-2 py-1 rounded-full border border-primary/20">
+                  <div className="absolute -top-2 -right-16 text-xs bg-primary/10 text-primary px-2 py-1 rounded-full border border-[#0E2C21]">
                     BETA
                   </div>
                 </div>
@@ -133,7 +133,7 @@ export default function HomePage() {
             
             <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
               Professional Trading
-              <span className="block bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+              <span className="block mt-2 bg-clip-text">
                 Made Simple & Secure
               </span>
             </h2>
@@ -149,7 +149,7 @@ export default function HomePage() {
                 <Button 
                   size="lg" 
                   onClick={handleLogin}
-                  className="group bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-6 text-xl font-semibold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:-translate-y-1 border border-primary/20"
+                  className="group bg-primary hover:bg-primary/90 text-[#212121] px-10 py-6 text-xl font-semibold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:-translate-y-1 border border-primary/20"
                 >
                   <LogIn className="mr-2 h-5 w-5 group-hover:animate-pulse" />
                   Connect Wallet
@@ -160,7 +160,7 @@ export default function HomePage() {
                   size="lg" 
                   onClick={handleWhitelistClick}
                   disabled={isPending}
-                  className="group bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-6 text-xl font-semibold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:-translate-y-1 border border-primary/20"
+                  className="group bg-primary hover:bg-primary/90 text-[#212121] px-10 py-6 text-xl font-semibold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:-translate-y-1 border border-primary/20"
                 >
                   <Sparkles className="mr-2 h-5 w-5 group-hover:animate-pulse" />
                   {isPending ? "Processing..." : "WhiteList My Account"}
@@ -171,7 +171,7 @@ export default function HomePage() {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="px-10 py-6 text-xl border-2 border-border/50 hover:border-primary/50 bg-background/50 backdrop-blur-sm hover:bg-primary/5 transition-all duration-300"
+                className="px-10 py-6 text-xl border-2 dark:text-[#00EC96] border-[#00EC96] hover:border-primary/50 bg-background/50 backdrop-blur-sm hover:bg-primary/5 transition-all duration-300"
               onClick={() => navigate({ to: "/markets" })}
               >
                 <Globe className="mr-2 h-5 w-5" />
@@ -189,17 +189,17 @@ export default function HomePage() {
             )}
 
             {/* Trust indicators */}
-            <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-muted-foreground">
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-white text-muted-foreground">
               <div className="flex items-center space-x-2">
-                <Lock className="h-4 w-4 text-green-500" />
+                <Lock className="h-4 w-4 " />
                 <span>Bank-grade Security</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Shield className="h-4 w-4 text-blue-500" />
+                <Shield className="h-4 w-4 " />
                 <span>Insured Funds</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Activity className="h-4 w-4 text-purple-500" />
+                <Activity className="h-4 w-4 " />
                 <span>24/7 Monitoring</span>
               </div>
             </div>
@@ -208,7 +208,7 @@ export default function HomePage() {
       </div>
 
       {/* Stats Section */}
-      <div className="py-16 bg-card/20 border-y border-border/40">
+      <div className="py-16 bg-background border-y border-border/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -229,7 +229,7 @@ export default function HomePage() {
       <div className="py-24 bg-gradient-to-b from-card/20 via-card/30 to-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-4 py-2 rounded-full border border-primary/20 mb-6">
+            <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
               <TrendingUp className="h-4 w-4" />
               <span className="text-sm font-medium">Why Choose Yield Guard</span>
             </div>
@@ -243,7 +243,7 @@ export default function HomePage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Feature 1 */}
-            <div className="group relative p-8 bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 overflow-hidden">
+            <div className="group relative p-8 bg-gradient-to-b from-background via-background to-background/50 backdrop-blur-sm rounded-2xl border border-border/50 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative">
                 <div className="p-4 bg-primary/10 rounded-xl w-fit mb-6 group-hover:bg-primary/20 transition-colors group-hover:scale-110 duration-300">
@@ -257,7 +257,7 @@ export default function HomePage() {
             </div>
 
             {/* Feature 2 */}
-            <div className="group relative p-8 bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 overflow-hidden">
+            <div className="group relative p-8 bg-gradient-to-b from-background via-background to-background/50 backdrop-blur-sm rounded-2xl border border-border/50 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative">
                 <div className="p-4 bg-primary/10 rounded-xl w-fit mb-6 group-hover:bg-primary/20 transition-colors group-hover:scale-110 duration-300">
@@ -271,7 +271,7 @@ export default function HomePage() {
             </div>
 
             {/* Feature 3 */}
-            <div className="group relative p-8 bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 overflow-hidden">
+            <div className="group relative p-8 bg-gradient-to-b from-background via-background to-background/50 backdrop-blur-sm rounded-2xl border border-border/50 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative">
                 <div className="p-4 bg-primary/10 rounded-xl w-fit mb-6 group-hover:bg-primary/20 transition-colors group-hover:scale-110 duration-300">
@@ -285,7 +285,7 @@ export default function HomePage() {
             </div>
 
             {/* Feature 4 */}
-            <div className="group relative p-8 bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 overflow-hidden">
+            <div className="group relative p-8 bg-gradient-to-b from-background via-background to-background/50 backdrop-blur-sm rounded-2xl border border-border/50 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative">
                 <div className="p-4 bg-primary/10 rounded-xl w-fit mb-6 group-hover:bg-primary/20 transition-colors group-hover:scale-110 duration-300">
@@ -299,7 +299,7 @@ export default function HomePage() {
             </div>
 
             {/* Feature 5 */}
-            <div className="group relative p-8 bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 overflow-hidden">
+            <div className="group relative p-8 bg-gradient-to-b from-background via-background to-background/50 backdrop-blur-sm rounded-2xl border border-border/50 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative">
                 <div className="p-4 bg-primary/10 rounded-xl w-fit mb-6 group-hover:bg-primary/20 transition-colors group-hover:scale-110 duration-300">
@@ -313,7 +313,7 @@ export default function HomePage() {
             </div>
 
             {/* Feature 6 */}
-            <div className="group relative p-8 bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 overflow-hidden">
+            <div className="group relative p-8 bg-gradient-to-b from-background via-background to-background/50 backdrop-blur-sm rounded-2xl border border-border/50 shadow-lg hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-3 overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative">
                 <div className="p-4 bg-primary/10 rounded-xl w-fit mb-6 group-hover:bg-primary/20 transition-colors group-hover:scale-110 duration-300">
@@ -330,10 +330,10 @@ export default function HomePage() {
       </div>
 
       {/* Testimonials Section */}
-      <div className="py-24 bg-card/30">
+      <div className="py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-4 py-2 rounded-full border border-primary/20 mb-6">
+            <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
               <Users className="h-4 w-4" />
               <span className="text-sm font-medium">Trusted by Professionals</span>
             </div>
@@ -347,7 +347,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-card/50 backdrop-blur-sm rounded-2xl p-8 border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300">
+              <div key={index} className="bg-background backdrop-blur-sm rounded-2xl p-8 border border-[#02D789] shadow-lg hover:shadow-xl transition-all duration-300">
                 <div className="flex items-center mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
@@ -386,7 +386,7 @@ export default function HomePage() {
       <div className="py-24 bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-4 py-2 rounded-full border border-primary/20 mb-6">
+            <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
               <CheckCircle className="h-4 w-4" />
               <span className="text-sm font-medium">Common Questions</span>
             </div>
@@ -400,7 +400,7 @@ export default function HomePage() {
 
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <div key={index} className="bg-card/50 backdrop-blur-sm rounded-xl p-6 border border-border/50">
+              <div key={index} className="dark:bg-[#34494280] bg-card/50 backdrop-blur-sm rounded-xl p-6 border border-border/50">
                 <div className="flex items-center justify-between mb-4 cursor-pointer">
                   <h4 className="text-lg font-semibold text-foreground">{faq.question}</h4>
                   <ChevronDown className="h-5 w-5 text-muted-foreground" />
@@ -413,10 +413,10 @@ export default function HomePage() {
       </div>
 
       {/* CTA Section */}
-      <div className="py-24 bg-gradient-to-b from-background to-primary/5 relative overflow-hidden">
+      <div className="py-24 dark:bg-[#213830] bg-background relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]"></div>
         <div className="relative max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-4 py-2 rounded-full border border-primary/20 mb-8">
+          <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-8">
             <Sparkles className="h-4 w-4" />
             <span className="text-sm font-medium">Limited Beta Access</span>
           </div>
@@ -432,7 +432,7 @@ export default function HomePage() {
             <Button 
               size="lg" 
               onClick={handleLogin}
-              className="group bg-primary hover:bg-primary/90 text-primary-foreground px-16 py-8 text-2xl font-semibold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:-translate-y-2 border border-primary/20 mb-12"
+              className="group bg-primary hover:bg-primary/90 dark:text-[#212121] px-16 py-8 text-2xl font-semibold shadow-2xl hover:shadow-primary/25 transition-all duration-300 transform hover:-translate-y-2 border border-primary/20 mb-12"
             >
               <LogIn className="mr-3 h-6 w-6 group-hover:animate-pulse" />
               Connect Wallet to Get Started
@@ -473,7 +473,7 @@ export default function HomePage() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-card border-t border-border">
+      <footer className="bg-gradient-to-b from-background via-background to-background/50 border-t border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Company Info */}
