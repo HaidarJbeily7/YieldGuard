@@ -136,9 +136,9 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-b from-card/20 via-card/30 to-background">
       {/* Header */}
-      <div className="border-b border-border/40 bg-card/30">
+      <div className="border-b border-border/40 ">
         <div className="container max-w-screen-2xl px-4 py-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div>
@@ -155,7 +155,7 @@ export default function DashboardPage() {
                 <RefreshCw className="h-4 w-4" />
                 <span>Refresh</span>
               </Button>
-              <Button className="bg-primary hover:bg-primary/90 flex items-center space-x-2">
+              <Button className="bg-primary text-[#212121] hover:bg-primary/90 flex items-center space-x-2">
                 <Plus className="h-4 w-4" />
                 <span>New Trade</span>
               </Button>
@@ -167,7 +167,7 @@ export default function DashboardPage() {
       <div className="container max-w-screen-2xl px-4 py-8">
         {/* Portfolio Overview */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <div className="lg:col-span-2 bg-card rounded-xl p-6 border shadow-sm">
+          <div className="lg:col-span-2 bg-gradient-to-b from-background via-background to-background/50 rounded-xl p-6 border shadow-sm">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold text-foreground">Portfolio Overview</h2>
               <Button variant="ghost" size="sm">
@@ -216,7 +216,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="bg-card rounded-xl p-6 border shadow-sm">
+          <div className="bg-gradient-to-b from-background via-background to-background/50 rounded-xl p-6 border shadow-sm">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-foreground">Quick Stats</h3>
               <PieChart className="h-5 w-5 text-muted-foreground" />
@@ -246,7 +246,7 @@ export default function DashboardPage() {
         {/* Holdings & Recent Activity */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
           {/* Holdings */}
-          <div className="bg-card rounded-xl border shadow-sm">
+          <div className="bg-gradient-to-b from-background via-background to-background/50 rounded-xl border shadow-sm">
             <div className="p-6 border-b border-border">
               <h3 className="text-xl font-semibold text-foreground">Holdings</h3>
             </div>
@@ -281,7 +281,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Recent Trades */}
-          <div className="bg-card rounded-xl border shadow-sm">
+          <div className="bg-gradient-to-b from-background via-background to-background/50 rounded-xl border shadow-sm">
             <div className="p-6 border-b border-border">
               <h3 className="text-xl font-semibold text-foreground">Recent Trades</h3>
             </div>
@@ -315,7 +315,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Watchlist */}
-        <div className="bg-card rounded-xl border shadow-sm">
+        <div className="bg-gradient-to-b from-background via-background to-background/50rounded-xl border shadow-sm">
           <div className="p-6 border-b border-border flex items-center justify-between">
             <h3 className="text-xl font-semibold text-foreground">Watchlist</h3>
             <Button variant="ghost" size="sm">

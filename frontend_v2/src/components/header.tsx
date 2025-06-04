@@ -127,7 +127,7 @@ export default function Header() {
                   <span>Connect</span>
                 </Link>
               </Button>
-              <Button asChild className="bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300">
+              <Button asChild className="bg-primary hover:bg-primary/90 shadow-lg dark:text-[#212121] hover:shadow-xl transition-all duration-300">
                 <Link to="/login" className="px-6">
                   Get Started
                 </Link>

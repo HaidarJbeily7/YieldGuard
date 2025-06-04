@@ -132,9 +132,9 @@ export default function MarketsPage() {
 	}
 
 	return (
-		<div className="min-h-screen bg-background">
+		<div className="min-h-screen bg-gradient-to-b from-card/20 via-card/30 to-background">
 			{/* Header */}
-			<div className="border-b border-border/40 bg-card/30">
+			<div className="border-b border-border/40">
 				<div className="container max-w-screen-2xl px-4 py-8">
 					<div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
 						<div>
@@ -166,7 +166,7 @@ export default function MarketsPage() {
 			<div className="container max-w-screen-2xl px-4 py-8">
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
 					{/* Total Market Cap */}
-					<div className="bg-card rounded-xl p-6 border shadow-sm">
+					<div className="bg-gradient-to-b from-background via-background to-background/50 rounded-xl p-6 border shadow-sm">
 						<div className="flex items-center justify-between mb-4">
 							<div className="p-2 bg-green-500/10 rounded-lg">
 								<TrendingUp className="h-5 w-5 text-green-500" />
@@ -182,7 +182,7 @@ export default function MarketsPage() {
 					</div>
 
 					{/* 24h Volume */}
-					<div className="bg-card rounded-xl p-6 border shadow-sm">
+					<div className="bg-gradient-to-b from-background via-background to-background/50 rounded-xl p-6 border shadow-sm">
 						<div className="flex items-center justify-between mb-4">
 							<div className="p-2 bg-blue-500/10 rounded-lg">
 								<BarChart3 className="h-5 w-5 text-blue-500" />
@@ -198,7 +198,7 @@ export default function MarketsPage() {
 					</div>
 
 					{/* Active Markets */}
-					<div className="bg-card rounded-xl p-6 border shadow-sm">
+					<div className="bg-gradient-to-b from-background via-background to-background/50 rounded-xl p-6 border shadow-sm">
 						<div className="flex items-center justify-between mb-4">
 							<div className="p-2 bg-purple-500/10 rounded-lg">
 								<Activity className="h-5 w-5 text-purple-500" />
@@ -214,7 +214,7 @@ export default function MarketsPage() {
 					</div>
 
 					{/* BTC Dominance */}
-					<div className="bg-card rounded-xl p-6 border shadow-sm">
+					<div className="bg-gradient-to-b from-background via-background to-background/50 rounded-xl p-6 border shadow-sm">
 						<div className="flex items-center justify-between mb-4">
 							<div className="p-2 bg-yellow-500/10 rounded-lg">
 								<DollarSign className="h-5 w-5 text-yellow-500" />
@@ -230,7 +230,7 @@ export default function MarketsPage() {
 					</div>
 				</div>
 				{/* Markets Table */}
-				<div className="bg-card rounded-xl border shadow-sm overflow-hidden">
+				<div className="bg-gradient-to-b from-background via-background to-background/50 rounded-xl border shadow-sm overflow-hidden">
 					<div className="p-6 border-b border-border">
 						<h2 className="text-xl font-semibold text-foreground">
 							Top Markets
