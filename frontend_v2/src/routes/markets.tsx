@@ -135,7 +135,7 @@ export default function MarketsPage() {
 		<div className="min-h-screen bg-gradient-to-b from-card/20 via-card/30 to-background">
 			{/* Header */}
 			<div className="border-b border-border/40">
-				<div className="container max-w-screen-2xl px-4 py-8">
+				<div className="px-4 py-8">
 					<div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
 						<div>
 							<h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
@@ -163,7 +163,7 @@ export default function MarketsPage() {
 			</div>
 
 			{/* Market Stats */}
-			<div className="container max-w-screen-2xl px-4 py-8">
+			<div className="px-4 py-8">
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
 					{/* Total Market Cap */}
 					<div className="bg-gradient-to-b from-background via-background to-background/50 rounded-xl p-6 border shadow-sm">
