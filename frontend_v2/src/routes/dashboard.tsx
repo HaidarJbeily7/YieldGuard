@@ -477,7 +477,7 @@ export default function DashboardPage() {
 
         {/* LLM Suggestions */}
         {llmSuggestions.length > 0 && (
-          <div className="mb-8 bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg">
+          <div className="mb-8 bg-white dark:bg-background rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg">
             <div className="p-6 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="p-2 bg-primary/10 rounded-lg">
@@ -500,7 +500,7 @@ export default function DashboardPage() {
             <div className="p-6">
               <div className="space-y-6">
                 {llmSuggestions.map((suggestion, index) => (
-                  <div key={index} className="relative bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 rounded-2xl p-6 hover:border-primary/30 hover:shadow-xl transition-all duration-300">
+                  <div key={index} className="relative bg-white dark:bg-background/50 border-2 border-gray-100 dark:border-gray-700 rounded-2xl p-6 hover:border-primary/30 hover:shadow-xl transition-all duration-300">
                     
                     {/* Priority Badge */}
                     <div className="absolute -top-3 -right-3">
