@@ -18,11 +18,11 @@
     "test:ui": "npx playwright test --ui"
   },
   "dependencies": {
-    "@near-js/client": "^0.0.2",
+    "@near-js/client": "^0.0.3",
     "@near-js/keystores-browser": "^0.2.2",
     "@near-js/providers": "^1.0.3",
     "@near-js/utils": "^1.1.0",
-    "@near-wallet-selector/bitte-wallet": "^8.10.2",
+    "@near-wallet-selector/bitte-wallet": "^9.0.0",
     "@near-wallet-selector/core": "^8.10.2",
     "@near-wallet-selector/ethereum-wallets": "^8.10.2",
     "@near-wallet-selector/here-wallet": "^8.10.2",
