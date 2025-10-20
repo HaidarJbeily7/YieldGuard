@@ -17,7 +17,7 @@
     "@near-wallet-selector/core": "^8.9.15",
     "@near-wallet-selector/here-wallet": "^8.9.15",
     "@near-wallet-selector/modal-ui": "^8.9.15",
-    "@near-wallet-selector/my-near-wallet": "^8.9.15",
+    "@near-wallet-selector/my-near-wallet": "^10.0.0",
     "@tabler/icons-react": "^3.26.0",
     "autoprefixer": "^10.4.20",
     "axios": "^1.8.3",
