@@ -27,7 +27,7 @@
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.1",
-    "@nestjs/swagger": "^11.1.6",
+    "@nestjs/swagger": "^11.2.2",
     "@nestjs/typeorm": "^11.0.0",
     "@ref-finance/ref-sdk": "^1.4.6",
     "@scalar/nestjs-api-reference": "^0.4.12",
