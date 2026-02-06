@@ -17,7 +17,7 @@ COPY . ./
 RUN npm run build
 
 # Use an Nginx image to serve the static files
-FROM nginx:alpine
+FROM nginx:1.29.5-alpine3.23
 WORKDIR /usr/share/nginx/html
 COPY --from=build /app/dist .
 
